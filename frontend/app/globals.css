@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-card-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-foreground-muted;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+}
+
+@layer components {
+  /* Glass effect */
+  .glass {
+    @apply bg-background/80 backdrop-blur-lg border border-card-border;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent-cyan bg-clip-text text-transparent;
+  }
+
+  /* Glow effect */
+  .glow {
+    @apply relative;
+  }
+
+  .glow::before {
+    content: '';
+    @apply absolute inset-0 bg-primary/20 rounded-lg blur-xl -z-10;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5;
+  }
+
+  /* Button primary */
+  .btn-primary {
+    @apply px-6 py-3 bg-primary text-white font-medium rounded-lg
+           hover:bg-primary-hover transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  /* Button secondary */
+  .btn-secondary {
+    @apply px-6 py-3 bg-card border border-card-border text-foreground font-medium rounded-lg
+           hover:border-primary/50 hover:bg-card-hover transition-all duration-200;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full px-4 py-3 rounded-lg bg-background-secondary border border-card-border
+           text-foreground placeholder-foreground-muted
+           focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50
+           transition-all;
+  }
+
+  /* Code block */
+  .code-block {
+    @apply p-4 rounded-lg bg-[#0d0d12] border border-card-border font-mono text-sm overflow-x-auto;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  /* Animation delays */
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* React Hot Toast custom styles */
+[data-theme='dark'] {
+  --toast-background: #161622;
+  --toast-border: #2a2a3a;
+  --toast-color: #f0f0f5;
+}
+
+/* Prism / Highlight.js syntax highlighting */
+pre[class*='language-'] {
+  @apply bg-[#0d0d12] rounded-lg p-4 overflow-x-auto text-sm;
+}
+
+code[class*='language-'] {
+  @apply font-mono;
+}
+
+/* Syntax highlighting colors */
+.hljs-keyword {
+  @apply text-accent-purple;
+}
+
+.hljs-string {
+  @apply text-green-400;
+}
+
+.hljs-number {
+  @apply text-orange-400;
+}
+
+.hljs-comment {
+  @apply text-foreground-muted;
+}
+
+.hljs-function {
+  @apply text-blue-400;
+}
+
+.hljs-operator {
+  @apply text-accent-cyan;
+}
