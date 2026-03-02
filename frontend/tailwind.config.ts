@@ -37,6 +37,7 @@ const config: Config = {
           hover: '#1e1e2e',
           border: '#2a2a3a',
         },
+        border: '#2a2a3a',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
