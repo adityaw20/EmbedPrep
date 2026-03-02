@@ -1,12 +1,16 @@
+/* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Custom CSS variables */
 :root {
   --background: #0a0a0f;
   --foreground: #f0f0f5;
+  --border-color: #2a2a3a;
 }
 
+/* Base styles */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -21,6 +25,7 @@ body {
   color: var(--foreground);
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -44,6 +49,7 @@ body {
   color: #f0f0f5;
 }
 
+/* Utility classes */
 .glass {
   background: rgba(10, 10, 15, 0.8);
   backdrop-filter: blur(10px);
