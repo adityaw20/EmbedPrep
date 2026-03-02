@@ -1,145 +1,140 @@
-import axios from 'axios';
 import type { QuestionsResponse, Question, Category, Stats, FilterState } from '@/types';
+import { 
+  questions, 
+  categories, 
+  stats, 
+  getFilteredQuestions, 
+  getQuestionById, 
+  getRelatedQuestions 
+} from './data';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// Add auth token to requests
-api.interceptors.request.use((config) => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-  }
-  return config;
-});
-
-// Question APIs
+// Local data API - no backend needed!
 export const questionApi = {
   getAll: async (filters: FilterState & { page?: number; limit?: number } = {}): Promise<QuestionsResponse> => {
-    const params = new URLSearchParams();
+    // Simulate network delay for realistic feel
+    await new Promise(resolve => setTimeout(resolve, 100));
     
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== '') {
-        params.append(key, String(value));
-      }
+    const result = getFilteredQuestions({
+      category: filters.category,
+      subcategory: filters.subcategory,
+      difficulty: filters.difficulty,
+      experienceLevel: filters.experienceLevel,
+      type: filters.type,
+      search: filters.search,
+      tags: filters.tags,
+      page: filters.page || 1,
+      limit: filters.limit || 20
     });
 
-    const response = await api.get(`/questions?${params.toString()}`);
-    return response.data;
+    return {
+      success: true,
+      data: result.data,
+      pagination: result.pagination
+    };
   },
 
   getById: async (id: string): Promise<{ success: boolean; data: Question }> => {
-    const response = await api.get(`/questions/${id}`);
-    return response.data;
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    const question = getQuestionById(id);
+    if (!question) {
+      throw new Error('Question not found');
+    }
+    
+    return {
+      success: true,
+      data: question
+    };
   },
 
   getRelated: async (id: string): Promise<{ success: boolean; data: Question[] }> => {
-    const response = await api.get(`/questions/${id}/related`);
-    return response.data;
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    const related = getRelatedQuestions(id);
+    return {
+      success: true,
+      data: related
+    };
   },
 
-  create: async (data: Partial<Question>): Promise<{ success: boolean; data: Question }> => {
-    const response = await api.post('/questions', data);
-    return response.data;
+  // Admin functions - disabled for static site
+  create: async (): Promise<{ success: boolean; data: Question }> => {
+    throw new Error('Admin functions not available in static mode');
   },
 
-  createBulk: async (questions: Partial<Question>[]): Promise<{ success: boolean; count: number }> => {
-    const response = await api.post('/questions/bulk', { questions });
-    return response.data;
+  createBulk: async (): Promise<{ success: boolean; count: number }> => {
+    throw new Error('Admin functions not available in static mode');
   },
 
-  update: async (id: string, data: Partial<Question>): Promise<{ success: boolean; data: Question }> => {
-    const response = await api.put(`/questions/${id}`, data);
-    return response.data;
+  update: async (): Promise<{ success: boolean; data: Question }> => {
+    throw new Error('Admin functions not available in static mode');
   },
 
-  delete: async (id: string): Promise<{ success: boolean }> => {
-    const response = await api.delete(`/questions/${id}`);
-    return response.data;
+  delete: async (): Promise<{ success: boolean }> => {
+    throw new Error('Admin functions not available in static mode');
   },
 
-  permanentDelete: async (id: string): Promise<{ success: boolean }> => {
-    const response = await api.delete(`/questions/${id}/permanent`);
-    return response.data;
+  permanentDelete: async (): Promise<{ success: boolean }> => {
+    throw new Error('Admin functions not available in static mode');
   },
 };
 
 // Category APIs
 export const categoryApi = {
   getAll: async (): Promise<{ success: boolean; data: Category[] }> => {
-    const response = await api.get('/categories');
-    return response.data;
+    await new Promise(resolve => setTimeout(resolve, 50));
+    return {
+      success: true,
+      data: categories
+    };
   },
 };
 
 // Stats APIs
 export const statsApi = {
   getStats: async (): Promise<{ success: boolean; data: Stats }> => {
-    const response = await api.get('/stats');
-    return response.data;
+    await new Promise(resolve => setTimeout(resolve, 50));
+    return {
+      success: true,
+      data: stats
+    };
   },
 };
 
-// Auth APIs
+// Auth APIs - disabled for static site
 export const authApi = {
-  login: async (username: string, password: string): Promise<{ success: boolean; token: string; user: { username: string; role: string } }> => {
-    const response = await api.post('/auth/login', { username, password });
-    return response.data;
+  login: async (): Promise<{ success: boolean; token: string; user: { username: string; role: string } }> => {
+    throw new Error('Authentication not available in static mode');
   },
 
   verify: async (): Promise<{ success: boolean; user: { username: string; role: string } }> => {
-    const response = await api.get('/auth/verify');
-    return response.data;
+    throw new Error('Authentication not available in static mode');
   },
 };
 
-// Upload APIs
+// Upload APIs - disabled for static site
 export const uploadApi = {
-  uploadCSV: async (file: File): Promise<{ success: boolean; count: number; message: string }> => {
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    const response = await api.post('/upload/csv', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+  uploadCSV: async (): Promise<{ success: boolean; count: number; message: string }> => {
+    throw new Error('Upload not available in static mode');
   },
 
-  uploadJSON: async (file: File): Promise<{ success: boolean; count: number; message: string }> => {
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    const response = await api.post('/upload/json', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+  uploadJSON: async (): Promise<{ success: boolean; count: number; message: string }> => {
+    throw new Error('Upload not available in static mode');
   },
 
   downloadCSVTemplate: async (): Promise<Blob> => {
-    const response = await api.get('/upload/template/csv', {
-      responseType: 'blob',
-    });
-    return response.data;
+    throw new Error('Download not available in static mode');
   },
 
   downloadJSONTemplate: async (): Promise<Blob> => {
-    const response = await api.get('/upload/template/json', {
-      responseType: 'blob',
-    });
-    return response.data;
+    throw new Error('Download not available in static mode');
   },
 };
 
-export default api;
+export default {
+  questionApi,
+  categoryApi,
+  statsApi,
+  authApi,
+  uploadApi
+};

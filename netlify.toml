@@ -1,15 +1,15 @@
 [build]
   base = "frontend"
-  publish = ".next"
-  command = "npm ci && npm run build"
+  publish = "dist"
+  command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "18.18.0"
   NPM_FLAGS = "--legacy-peer-deps"
   NEXT_TELEMETRY_DISABLED = "1"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-[context.production.environment]
-  NODE_ENV = "production"
+# Redirect rules for SPA behavior
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

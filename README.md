@@ -1,256 +1,164 @@
-# EmbedPrep 🚀
+# EmbedPrep 🚀 (Static Site Edition)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)](https://www.mongodb.com/cloud/atlas)
+[![Netlify](https://img.shields.io/badge/Deploy%20on-Netlify-00C7B7)](https://netlify.com)
 
-> Comprehensive Interview Preparation Platform for Embedded Systems, Firmware, and IoT Engineers
+> **Frontend-Only Interview Preparation Platform for Embedded Systems, Firmware, and IoT Engineers**
+
+**This is the simplified static site version** - no backend required! All questions are embedded directly in the frontend for easy deployment on Netlify.
 
 ![EmbedPrep Preview](https://via.placeholder.com/800x400/0a0a0f/3b82f6?text=EmbedPrep+-+Master+Embedded+Systems)
 
 ## ✨ Features
 
-- **5000+ Curated Questions** covering all embedded domains
+- **60+ Curated Questions** covering all embedded domains (C, C++, Protocols, RTOS, Microcontrollers, IoT, PCB)
 - **Categories**: C Programming, C++, Protocols, RTOS, Microcontrollers, IoT, PCB Design
 - **Difficulty Levels**: Easy, Medium, Hard
 - **Experience Levels**: Fresher to Senior (including Automotive & Product Companies)
 - **Question Types**: MCQ and Descriptive
-- **Admin Panel**: Add, edit, delete questions; bulk upload via CSV/JSON
 - **Dark Modern UI**: Premium developer-focused design
 - **Fully Responsive**: Works on desktop, tablet, and mobile
+- **No Backend Required**: All data is static, deploy anywhere!
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 14 (Static Export)
 - **Styling**: Tailwind CSS
 - **UI Components**: Custom components with Lucide icons
-- **HTTP Client**: Axios
-- **Notifications**: React Hot Toast
+- **Deployment**: Netlify (or any static host)
 
-### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB Atlas
-- **ODM**: Mongoose
-- **Security**: Helmet, CORS, Rate Limiting
-- **Authentication**: JWT
+## 🚀 Quick Start
 
-### Deployment
-- **Frontend**: Vercel
-- **Backend**: Render
-- **Database**: MongoDB Atlas
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/yourusername/EmbedPrep.git
+cd EmbedPrep
+cd frontend
+npm install
+```
+
+### 2. Run Locally
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+### 3. Build for Production
+
+```bash
+npm run build
+```
+
+The static site will be generated in `frontend/dist/`.
+
+## 📦 Deployment on Netlify
+
+### Option 1: Drag & Drop (Easiest)
+
+1. Run `npm run build` in the `frontend` folder
+2. Go to [Netlify Drop](https://app.netlify.com/drop)
+3. Drag and drop the `frontend/dist` folder
+4. Your site is live! 🎉
+
+### Option 2: Git-based Deployment
+
+1. Push your code to GitHub
+2. Connect your repo on [Netlify](https://netlify.com)
+3. Build settings:
+   - **Base directory**: `frontend`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+4. Click Deploy
 
 ## 📁 Project Structure
 
 ```
 EmbedPrep/
-├── backend/                  # Express.js API
-│   ├── config/              # Database configuration
-│   ├── controllers/         # Route controllers
-│   ├── middleware/          # Auth, error handling
-│   ├── models/              # Mongoose models
-│   ├── routes/              # API routes
-│   ├── utils/               # Seed script
-│   ├── .env.example         # Environment template
-│   ├── package.json
-│   └── server.js            # Entry point
-│
-├── frontend/                 # Next.js application
+├── frontend/                 # Next.js application (static export)
 │   ├── app/                 # App router pages
-│   │   ├── (main)/          # Main routes
-│   │   ├── admin/           # Admin panel
-│   │   ├── question/[id]/   # Question detail
+│   │   ├── main/           # Main routes (questions, search, etc.)
+│   │   ├── question/[id]/  # Question detail pages (SSG)
+│   │   ├── admin/          # Admin panel (disabled in static mode)
 │   │   ├── layout.tsx
-│   │   ├── page.tsx         # Home page
-│   │   └── globals.css
+│   │   └── page.tsx        # Home page
 │   ├── components/          # React components
-│   ├── lib/                 # Utilities & API
+│   ├── lib/                 # Utilities & data
+│   │   ├── data.ts         # All questions data (static)
+│   │   └── api.ts          # Local data API
 │   ├── types/               # TypeScript types
-│   ├── .env.local.example
+│   ├── dist/                # Build output (static files)
 │   ├── next.config.js
-│   ├── tailwind.config.ts
 │   └── package.json
 │
+├── netlify.toml             # Netlify configuration
+├── package.json             # Root package.json
 └── README.md
 ```
 
-## 🚀 Getting Started
+## 📝 Adding/Modifying Questions
 
-### Prerequisites
+Since this is a static site, to add or modify questions:
 
-- Node.js >= 18.0.0
-- MongoDB Atlas account (or local MongoDB)
-- npm or yarn
+1. Edit `frontend/lib/data.ts`
+2. Add your question to the `rawQuestions` array following the existing format
+3. Rebuild and redeploy
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/EmbedPrep.git
-cd EmbedPrep
-```
-
-### 2. Backend Setup
-
-```bash
-cd backend
-
-# Install dependencies
-npm install
-
-# Copy environment file
-cp .env.example .env
-
-# Edit .env with your credentials
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/embedprep
-# JWT_SECRET=your_super_secret_key
-# ADMIN_USERNAME=admin
-# ADMIN_PASSWORD_HASH=your_bcrypt_hashed_password
-
-# Generate admin password hash (run in Node.js)
-# const bcrypt = require('bcryptjs');
-# bcrypt.hash('your_password', 10).then(console.log);
-
-# Seed the database with 1000 sample questions
-npm run seed
-
-# Start development server
-npm run dev
-```
-
-The backend will run on `http://localhost:5000`
-
-### 3. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Copy environment file
-cp .env.local.example .env.local
-
-# Edit .env.local
-# NEXT_PUBLIC_API_URL=http://localhost:5000/api
-
-# Start development server
-npm run dev
-```
-
-The frontend will run on `http://localhost:3000`
-
-## 📦 Deployment
-
-### Backend Deployment (Render)
-
-1. Create a new Web Service on [Render](https://render.com)
-2. Connect your GitHub repository
-3. Configure:
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-   - **Environment Variables**: Add all variables from `.env`
-
-### Frontend Deployment (Vercel)
-
-1. Push your code to GitHub
-2. Import project on [Vercel](https://vercel.com)
-3. Configure:
-   - **Framework Preset**: Next.js
-   - **Root Directory**: `frontend`
-   - **Environment Variables**: `NEXT_PUBLIC_API_URL=https://your-render-api.onrender.com/api`
-
-### Database Setup (MongoDB Atlas)
-
-1. Create a free cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a database user
-3. Whitelist your IP address (or use `0.0.0.0/0` for all IPs)
-4. Get your connection string and add to environment variables
-
-## 🔑 Admin Panel Access
-
-1. Navigate to `/admin/login`
-2. Login with admin credentials:
-   - **Username:** `aditya`
-   - **Password:** `aditya@20`
-3. Access features:
-   - Add single question
-   - Bulk upload (CSV/JSON)
-   - Manage existing questions
-   - View statistics
-
-### CSV Upload Format
-
-```csv
-category,subcategory,type,difficulty,experienceLevel,question,options,correctAnswer,explanation,tags
-C Programming,Pointers,MCQ,Medium,1-3 Years,"What is a pointer?","[{id:""a"",text:""A variable""},{id:""b"",text:""Memory address""}]",b,"A pointer stores memory address.","C,Pointer"
-```
-
-### JSON Upload Format
-
-```json
+Example question format:
+```typescript
 {
-  "questions": [
-    {
-      "category": "C Programming",
-      "subcategory": "Pointers",
-      "type": "MCQ",
-      "difficulty": "Medium",
-      "experienceLevel": "1-3 Years",
-      "question": "What is a pointer?",
-      "options": [
-        { "id": "a", "text": "A variable" },
-        { "id": "b", "text": "Memory address" }
-      ],
-      "correctAnswer": "b",
-      "explanation": "A pointer stores memory address.",
-      "tags": ["C", "Pointer"]
-    }
-  ]
+  category: "C Programming",
+  subcategory: "Pointers",
+  type: "MCQ",
+  difficulty: "Medium",
+  experienceLevel: "1-3 Years",
+  question: "What is a pointer?",
+  options: [
+    { id: "a", text: "A variable" },
+    { id: "b", text: "Memory address" }
+  ],
+  correctAnswer: "b",
+  explanation: "A pointer stores memory address.",
+  tags: ["C", "Pointer"]
 }
 ```
 
-## 📋 API Endpoints
+## 🎯 Available Routes
 
-### Questions
-- `GET /api/questions` - Get all questions (with filters & pagination)
-- `GET /api/questions/:id` - Get single question
-- `GET /api/questions/:id/related` - Get related questions
-- `POST /api/questions` - Create question (Admin)
-- `POST /api/questions/bulk` - Create multiple questions (Admin)
-- `PUT /api/questions/:id` - Update question (Admin)
-- `DELETE /api/questions/:id` - Delete question (Admin)
+| Route | Description |
+|-------|-------------|
+| `/` | Home page with categories |
+| `/main/questions` | Browse all questions |
+| `/main/c-mcq` | C Programming MCQs |
+| `/main/cpp-mcq` | C++ Programming MCQs |
+| `/main/protocols` | Communication Protocols |
+| `/main/interview` | Interview Questions |
+| `/main/search` | Search questions |
+| `/question/[id]` | Individual question page |
 
-### Categories & Stats
-- `GET /api/categories` - Get all categories
-- `GET /api/stats` - Get statistics
+## 🔧 Configuration
 
-### Admin
-- `POST /api/auth/login` - Admin login
-- `GET /api/auth/verify` - Verify token
+### next.config.js
+```javascript
+module.exports = {
+  output: 'export',
+  distDir: 'dist',
+  images: {
+    unoptimized: true,
+  },
+}
+```
 
-### Upload
-- `POST /api/upload/csv` - Upload CSV (Admin)
-- `POST /api/upload/json` - Upload JSON (Admin)
-
-## 🎯 Roadmap
-
-- [ ] User authentication & progress tracking
-- [ ] Bookmark questions
-- [ ] Mock tests & quizzes
-- [ ] Discussion forum
-- [ ] Mobile app (React Native)
-- [ ] AI-powered question recommendations
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### netlify.toml
+```toml
+[build]
+  base = "frontend"
+  publish = "dist"
+  command = "npm run build"
+```
 
 ## 📝 License
 
@@ -258,16 +166,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
+- Questions curated from real interviews at Qualcomm, Intel, NXP, Bosch, Texas Instruments, STMicroelectronics
 - Embedded Systems community
 - Contributors and maintainers
-- Open source projects that made this possible
-
-## 📧 Contact
-
-- Website: [embedprep.com](https://embedprep.com)
-- Email: contact@embedprep.com
-- Twitter: [@embedprep](https://twitter.com/embedprep)
 
 ---
 
-Made with ❤️ for Embedded Engineers
+**Made with ❤️ for Embedded Engineers**
+
+> Note: This is the static site version. For the full-stack version with admin panel and database, check the original repository.

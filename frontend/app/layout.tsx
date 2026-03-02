@@ -3,7 +3,6 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,6 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://embedprep.netlify.app'),
   title: 'EmbedPrep - Master Embedded Systems & IoT',
   description:
     'Comprehensive interview preparation platform for Embedded Systems, Firmware, and IoT Engineers. 5000+ curated questions on C, C++, Protocols, RTOS, Microcontrollers, and more.',
@@ -54,16 +54,7 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-screen pt-16">{children}</main>
         <Footer />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: '#161622',
-              color: '#f0f0f5',
-              border: '1px solid #2a2a3a',
-            },
-          }}
-        />
+
       </body>
     </html>
   );
