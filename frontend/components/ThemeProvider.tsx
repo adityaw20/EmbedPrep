@@ -26,23 +26,45 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    // Check for saved theme or system preference
+    const savedTheme = localStorage.getItem('embedprep-theme') as Theme | null;
     if (savedTheme) {
       setTheme(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      applyTheme(savedTheme);
     } else {
-      document.documentElement.classList.add('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
+      // Default to dark
+      applyTheme('dark');
     }
   }, []);
+
+  const applyTheme = (newTheme: Theme) => {
+    const root = document.documentElement;
+    if (newTheme === 'dark') {
+      root.classList.add('dark');
+      root.style.setProperty('--background', '#0a0a0f');
+      root.style.setProperty('--background-secondary', '#12121a');
+      root.style.setProperty('--foreground', '#f0f0f5');
+      root.style.setProperty('--foreground-secondary', '#a0a0b0');
+      root.style.setProperty('--foreground-muted', '#6b7280');
+      root.style.setProperty('--card', '#161622');
+      root.style.setProperty('--card-border', '#2a2a3a');
+    } else {
+      root.classList.remove('dark');
+      root.style.setProperty('--background', '#ffffff');
+      root.style.setProperty('--background-secondary', '#f8fafc');
+      root.style.setProperty('--foreground', '#1e293b');
+      root.style.setProperty('--foreground-secondary', '#64748b');
+      root.style.setProperty('--foreground-muted', '#94a3b8');
+      root.style.setProperty('--card', '#ffffff');
+      root.style.setProperty('--card-border', '#e2e8f0');
+    }
+  };
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
-    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('embedprep-theme', newTheme);
+    applyTheme(newTheme);
   };
 
   return (

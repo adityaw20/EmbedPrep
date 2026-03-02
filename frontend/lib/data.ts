@@ -1336,6 +1336,650 @@ const rawQuestions: Omit<Question, '_id' | 'viewCount' | 'createdAt' | 'updatedA
     explanation: "LIN (Local Interconnect Network) is a low-cost serial network for automotive. Used for doors, seats, lights - where CAN is too expensive. Single wire, up to 20 kbps, master-slave architecture.",
     tags: ["LIN", "Automotive", "Serial", "Low Cost"],
     source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL C PROGRAMMING QUESTIONS (40 more) ==============
+  {
+    category: "C Programming",
+    subcategory: "Pointers",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is the size of a pointer in a 64-bit system?",
+    options: [
+      { id: "a", text: "2 bytes" },
+      { id: "b", text: "4 bytes" },
+      { id: "c", text: "8 bytes" },
+      { id: "d", text: "Depends on the data type" }
+    ],
+    correctAnswer: "c",
+    explanation: "On a 64-bit system, pointers are typically 8 bytes (64 bits) to address the full memory space. On 32-bit systems, they are 4 bytes.",
+    tags: ["C", "Pointers", "Memory", "Architecture"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Arrays",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between arr[5] and *(arr+5)?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "arr[5] is faster" },
+      { id: "c", text: "*(arr+5) is safer" },
+      { id: "d", text: "Depends on compiler" }
+    ],
+    correctAnswer: "a",
+    explanation: "arr[5] and *(arr+5) are exactly equivalent. Array indexing is syntactic sugar for pointer arithmetic. Both access the 6th element (index 5).",
+    tags: ["C", "Arrays", "Pointers", "Syntax"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Memory",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is memory leak? How to detect it?",
+    options: [
+      { id: "a", text: "Using too much memory" },
+      { id: "b", text: "Allocated memory not freed" },
+      { id: "c", text: "Stack overflow" },
+      { id: "d", text: "Using malloc instead of calloc" }
+    ],
+    correctAnswer: "b",
+    explanation: "Memory leak occurs when dynamically allocated memory is not freed. Detection tools: Valgrind, AddressSanitizer, static analysis tools. Prevention: Always free what you malloc, use smart pointers in C++, RAII patterns.",
+    tags: ["C", "Memory Leak", "Debugging", "Tools"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Functions",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between call by value and call by reference?",
+    options: [
+      { id: "a", text: "No difference in C" },
+      { id: "b", text: "Call by value copies data, call by reference uses pointers" },
+      { id: "c", text: "Call by reference is faster" },
+      { id: "d", text: "Call by value can modify original" }
+    ],
+    correctAnswer: "b",
+    explanation: "Call by value: function receives a copy of the argument. Modifications don't affect original. Call by reference (using pointers): function receives address, can modify original data. C only supports call by value, but pointers can simulate call by reference.",
+    tags: ["C", "Functions", "Parameters", "Pointers"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Strings",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is the output: printf(\"%d\", sizeof(\"Hello\"));",
+    options: [
+      { id: "a", text: "5" },
+      { id: "b", text: "6" },
+      { id: "c", text: "4" },
+      { id: "d", text: "Compiler error" }
+    ],
+    correctAnswer: "b",
+    explanation: "String literal \"Hello\" includes null terminator, so sizeof returns 6 (5 characters + '\\0'). strlen() would return 5.",
+    tags: ["C", "Strings", "sizeof", "Null Terminator"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Loops",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is the output: for(int i=0; i<5; i++); printf(\"%d\", i);",
+    options: [
+      { id: "a", text: "0" },
+      { id: "b", text: "4" },
+      { id: "c", text: "5" },
+      { id: "d", text: "Compilation error" }
+    ],
+    correctAnswer: "d",
+    explanation: "This code won't compile because variable 'i' is declared inside the for loop (C99+ style) and is not accessible after the loop ends. The semicolon after for() also creates an empty loop body.",
+    tags: ["C", "Loops", "Scope", "Syntax"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Unions",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the size of a union?",
+    options: [
+      { id: "a", text: "Sum of all member sizes" },
+      { id: "b", text: "Size of largest member" },
+      { id: "c", text: "Size of smallest member" },
+      { id: "d", text: "Always 4 bytes" }
+    ],
+    correctAnswer: "b",
+    explanation: "Union size equals the size of its largest member. All members share the same memory location. Only one member can hold a value at a time.",
+    tags: ["C", "Unions", "Memory", "Data Structures"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Bitwise",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "How to check if a number is a power of 2 using bitwise?",
+    options: [
+      { id: "a", text: "n & 1" },
+      { id: "b", text: "n & (n-1) == 0" },
+      { id: "c", text: "n | (n-1)" },
+      { id: "d", text: "n ^ 1" }
+    ],
+    correctAnswer: "b",
+    explanation: "Powers of 2 have exactly one bit set (e.g., 8=1000). n & (n-1) clears the lowest set bit. If result is 0, it was a power of 2. Example: 8 & 7 = 1000 & 0111 = 0000.",
+    tags: ["C", "Bitwise", "Power of 2", "Tricks"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Structures",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain structure padding and how to avoid it.",
+    correctAnswer: "Structure padding adds extra bytes to align members to memory boundaries for faster access.",
+    explanation: "Compilers add padding to align data for performance. To minimize: 1) Order members by size (largest first), 2) Use #pragma pack(1) to disable packing (slower access), 3) Use __attribute__((packed)) in GCC. Trade-off: packed structures use less memory but may be slower to access.",
+    tags: ["C", "Structures", "Padding", "Memory Optimization"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "File Handling",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between text and binary file modes?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "Text mode handles newline conversion" },
+      { id: "c", text: "Binary mode is faster" },
+      { id: "d", text: "Text mode has error checking" }
+    ],
+    correctAnswer: "b",
+    explanation: "Text mode (\"r\", \"w\") performs newline conversion (\\n ↔ \\r\\n on Windows). Binary mode (\"rb\", \"wb\") reads/writes bytes exactly as-is. Binary mode is essential for non-text files like images, executables.",
+    tags: ["C", "File I/O", "Text Mode", "Binary Mode"],
+    source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL C++ QUESTIONS (30 more) ==============
+  {
+    category: "C++ Programming",
+    subcategory: "OOP",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between public, private, and protected inheritance?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "Public: unchanged, Protected: becomes protected, Private: becomes private" },
+      { id: "c", text: "Only access specifier names differ" },
+      { id: "d", text: "Private inheritance is faster" }
+    ],
+    correctAnswer: "b",
+    explanation: "Public inheritance: public→public, protected→protected. Protected inheritance: public→protected, protected→protected. Private inheritance: all become private. Public is 'is-a' relationship, private is 'implemented-in-terms-of'.",
+    tags: ["C++", "Inheritance", "Access Specifiers", "OOP"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Polymorphism",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the difference between compile-time and runtime polymorphism?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "Compile-time: overloading/templates, Runtime: virtual functions" },
+      { id: "c", text: "Runtime is faster" },
+      { id: "d", text: "Compile-time uses more memory" }
+    ],
+    correctAnswer: "b",
+    explanation: "Compile-time (static) polymorphism: function overloading, operator overloading, templates - resolved at compile time. Runtime (dynamic) polymorphism: virtual functions, vtable - resolved at runtime based on actual object type.",
+    tags: ["C++", "Polymorphism", "Virtual Functions", "Templates"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Constructors",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is an initializer list in C++?",
+    options: [
+      { id: "a", text: "A type of array" },
+      { id: "b", text: "Constructor syntax to initialize members before body executes" },
+      { id: "c", text: "A STL container" },
+      { id: "d", text: "A comment style" }
+    ],
+    correctAnswer: "b",
+    explanation: "Initializer list (after colon in constructor) initializes members before constructor body runs. Required for: const members, reference members, base class construction, member objects without default constructors. More efficient than assignment in body.",
+    tags: ["C++", "Constructors", "Initializer List", "OOP"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "STL",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the time complexity of std::map operations?",
+    options: [
+      { id: "a", text: "O(1)" },
+      { id: "b", text: "O(log n)" },
+      { id: "c", text: "O(n)" },
+      { id: "d", text: "O(n log n)" }
+    ],
+    correctAnswer: "b",
+    explanation: "std::map (typically red-black tree) has O(log n) for insert, delete, find. std::unordered_map (hash table) has O(1) average case. Tree-based map keeps elements sorted, hash map doesn't.",
+    tags: ["C++", "STL", "Map", "Complexity"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Exception Handling",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What happens if an exception is thrown but not caught?",
+    options: [
+      { id: "a", text: "Program continues" },
+      { id: "b", text: "std::terminate is called" },
+      { id: "c", text: "Exception is ignored" },
+      { id: "d", text: "Memory leak occurs" }
+    ],
+    correctAnswer: "b",
+    explanation: "Uncaught exceptions call std::terminate() which aborts the program. In embedded systems, exceptions are often disabled (compilation flags) due to code size and performance concerns.",
+    tags: ["C++", "Exceptions", "Error Handling", "Embedded"],
+    source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL PROTOCOL QUESTIONS (25 more) ==============
+  {
+    category: "Communication Protocols",
+    subcategory: "Bluetooth",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "BLE stands for:",
+    options: [
+      { id: "a", text: "Bluetooth Long Range" },
+      { id: "b", text: "Bluetooth Low Energy" },
+      { id: "c", text: "Bluetooth Link Enhanced" },
+      { id: "d", text: "Bluetooth Local Exchange" }
+    ],
+    correctAnswer: "b",
+    explanation: "BLE (Bluetooth Low Energy) is designed for low power consumption. Different from Classic Bluetooth - not backward compatible at protocol level. Used in beacons, fitness trackers, IoT sensors.",
+    tags: ["Bluetooth", "BLE", "Wireless", "Low Power"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "Zigbee",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Zigbee operates in which frequency band?",
+    options: [
+      { id: "a", text: "2.4 GHz only" },
+      { id: "b", text: "915 MHz only" },
+      { id: "c", text: "2.4 GHz, 915 MHz, 868 MHz" },
+      { id: "d", text: "5 GHz" }
+    ],
+    correctAnswer: "c",
+    explanation: "Zigbee operates in: 2.4 GHz (global, 16 channels), 915 MHz (Americas, 10 channels), 868 MHz (Europe, 1 channel). 2.4 GHz shares band with WiFi, Bluetooth.",
+    tags: ["Zigbee", "Wireless", "Frequency", "IoT"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "TCP/IP",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between TCP and UDP?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "TCP is connection-oriented, UDP is connectionless" },
+      { id: "c", text: "UDP is faster but unreliable" },
+      { id: "d", text: "Both B and C" }
+    ],
+    correctAnswer: "d",
+    explanation: "TCP: connection-oriented, reliable, ordered delivery, flow control, congestion control. UDP: connectionless, unreliable, no ordering, lower overhead, faster. TCP for file transfer, UDP for streaming/voice.",
+    tags: ["TCP", "UDP", "Networking", "Protocols"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "HTTP",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "HTTP status code 404 means:",
+    options: [
+      { id: "a", text: "Server error" },
+      { id: "b", text: "Not Found" },
+      { id: "c", text: "Unauthorized" },
+      { id: "d", text: "Redirect" }
+    ],
+    correctAnswer: "b",
+    explanation: "404 Not Found: requested resource doesn't exist. Common codes: 200 OK, 301/302 Redirect, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal Server Error.",
+    tags: ["HTTP", "Status Codes", "Web", "Basics"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "SPI",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is SPI clock polarity and phase (CPOL, CPHA)?",
+    options: [
+      { id: "a", text: "They control clock speed" },
+      { id: "b", text: "They define when data is sampled and clock idle state" },
+      { id: "c", text: "They are not important" },
+      { id: "d", text: "They control chip select" }
+    ],
+    correctAnswer: "b",
+    explanation: "CPOL: clock idle state (0=low, 1=high). CPHA: data sampling edge (0=first edge, 1=second edge). Four modes (0-3). Master and slave must use same mode. Critical for proper SPI communication.",
+    tags: ["SPI", "Timing", "Clock", "Configuration"],
+    source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL EMBEDDED QUESTIONS (25 more) ==============
+  {
+    category: "Embedded Systems",
+    subcategory: "CRC",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is CRC used for?",
+    options: [
+      { id: "a", text: "Data compression" },
+      { id: "b", text: "Error detection" },
+      { id: "c", text: "Encryption" },
+      { id: "d", text: "Data sorting" }
+    ],
+    correctAnswer: "b",
+    explanation: "CRC (Cyclic Redundancy Check) detects accidental changes to data. Used in communication protocols, storage systems. Not for security (cryptographic hashes for that). Common: CRC-8, CRC-16, CRC-32.",
+    tags: ["CRC", "Error Detection", "Communication", "Data Integrity"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "FPU",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What does FPU stand for?",
+    options: [
+      { id: "a", text: "Fast Processing Unit" },
+      { id: "b", text: "Floating Point Unit" },
+      { id: "c", text: "Flash Programming Unit" },
+      { id: "d", text: "Frequency Processing Unit" }
+    ],
+    correctAnswer: "b",
+    explanation: "FPU (Floating Point Unit) is hardware for floating-point operations. Without FPU, floating-point is done in software (much slower). Cortex-M4 has optional FPU, Cortex-M3 doesn't.",
+    tags: ["FPU", "Floating Point", "Hardware", "Performance"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "NVIC",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is NVIC in ARM Cortex-M?",
+    options: [
+      { id: "a", text: "Network Video Interface Controller" },
+      { id: "b", text: "Nested Vectored Interrupt Controller" },
+      { id: "c", text: "Non-Volatile Input Controller" },
+      { id: "d", text: "New Virtual Interrupt Channel" }
+    ],
+    correctAnswer: "b",
+    explanation: "NVIC manages interrupts in Cortex-M. Features: 1) Nested interrupts (higher priority can preempt), 2) Vectored table (direct jump to handler), 3) Configurable priority levels, 4) Integrated with core for low latency.",
+    tags: ["ARM", "NVIC", "Interrupts", "Cortex-M"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "Boot",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the purpose of a bootloader?",
+    options: [
+      { id: "a", text: "To speed up the CPU" },
+      { id: "b", text: "To initialize hardware and load the main application" },
+      { id: "c", text: "To encrypt data" },
+      { id: "d", text: "To communicate with network" }
+    ],
+    correctAnswer: "b",
+    explanation: "Bootloader runs at startup to: 1) Initialize minimal hardware (clock, RAM), 2) Check for firmware updates, 3) Load and jump to main application. Can also provide recovery/upgrade mechanisms.",
+    tags: ["Bootloader", "Boot", "Initialization", "Firmware"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "EEPROM",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What does EEPROM stand for?",
+    options: [
+      { id: "a", text: "Electrically Erasable Programmable Read-Only Memory" },
+      { id: "b", text: "Electronic External Programmable Memory" },
+      { id: "c", text: "Enhanced Embedded Program Memory" },
+      { id: "d", text: "External Extended ROM" }
+    ],
+    correctAnswer: "a",
+    explanation: "EEPROM is non-volatile memory that can be erased and reprogrammed electrically (byte by byte). Used for storing configuration, calibration data. Slower than Flash, more expensive, but byte-addressable.",
+    tags: ["EEPROM", "Memory", "Non-volatile", "Storage"],
+    source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL RTOS QUESTIONS (15 more) ==============
+  {
+    category: "RTOS",
+    subcategory: "Message Queues",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is a message queue in RTOS?",
+    options: [
+      { id: "a", text: "A hardware queue" },
+      { id: "b", text: "A FIFO buffer for inter-task communication" },
+      { id: "c", text: "A priority system" },
+      { id: "d", text: "A debugging tool" }
+    ],
+    correctAnswer: "b",
+    explanation: "Message queue is a FIFO buffer allowing tasks to send and receive messages. Decouples sender and receiver. Can be blocking (wait if empty/full) or non-blocking. Size must be defined at creation.",
+    tags: ["RTOS", "Message Queue", "IPC", "Communication"],
+    source: "Common Interview"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Memory",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "Compare static and dynamic memory allocation in RTOS.",
+    correctAnswer: "Static: allocated at compile time, deterministic, no fragmentation. Dynamic: allocated at runtime, flexible, risk of fragmentation and non-determinism.",
+    explanation: "Static allocation: fixed sizes, known at compile time, no runtime failures, predictable. Dynamic (heap): malloc/free, flexible sizes, can fail, fragmentation, non-deterministic time. Embedded prefers static for reliability. Some safety-critical systems ban dynamic allocation.",
+    tags: ["RTOS", "Memory", "Static", "Dynamic", "Allocation"],
+    source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL MICROCONTROLLER QUESTIONS (15 more) ==============
+  {
+    category: "Microcontrollers",
+    subcategory: "Raspberry Pi",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "Raspberry Pi uses which processor architecture?",
+    options: [
+      { id: "a", text: "x86" },
+      { id: "b", text: "ARM" },
+      { id: "c", text: "AVR" },
+      { id: "d", text: "MIPS" }
+    ],
+    correctAnswer: "b",
+    explanation: "Raspberry Pi uses ARM processors (BCM chips). Pi 4 uses Cortex-A72. Different from Arduino (AVR) or ESP32 (Xtensa). ARM Cortex-A series for applications, Cortex-M for microcontrollers.",
+    tags: ["Raspberry Pi", "ARM", "Architecture", "Single Board Computer"],
+    source: "Common Interview"
+  },
+  {
+    category: "Microcontrollers",
+    subcategory: "Arduino",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What language is Arduino programmed in?",
+    options: [
+      { id: "a", text: "Python" },
+      { id: "b", text: "C/C++" },
+      { id: "c", text: "Java" },
+      { id: "d", text: "Assembly only" }
+    ],
+    correctAnswer: "b",
+    explanation: "Arduino uses C/C++ with some simplifications and libraries. The IDE handles compilation via avr-gcc. Users write setup() and loop() functions. Can also use pure C/C++ or inline assembly.",
+    tags: ["Arduino", "C++", "Programming", "Basics"],
+    source: "Common Interview"
+  },
+
+  // ============== ADDITIONAL INTERVIEW QUESTIONS (40 more) ==============
+  {
+    category: "Interview Questions",
+    subcategory: "Data Structures",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Which data structure uses LIFO?",
+    options: [
+      { id: "a", text: "Queue" },
+      { id: "b", text: "Stack" },
+      { id: "c", text: "Array" },
+      { id: "d", text: "Linked List" }
+    ],
+    correctAnswer: "b",
+    explanation: "Stack uses LIFO (Last In First Out). Queue uses FIFO (First In First Out). Stack operations: push (add), pop (remove). Used for: function calls, expression evaluation, backtracking.",
+    tags: ["Data Structures", "Stack", "LIFO", "Algorithms"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Debugging",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is a breakpoint in debugging?",
+    options: [
+      { id: "a", text: "A syntax error" },
+      { id: "b", text: "A point where execution pauses" },
+      { id: "c", text: "A memory leak" },
+      { id: "d", text: "A compiler warning" }
+    ],
+    correctAnswer: "b",
+    explanation: "Breakpoint pauses program execution at a specific line. Debugger then allows: inspecting variables, single-stepping, modifying values, examining call stack. Essential debugging tool.",
+    tags: ["Debugging", "Breakpoint", "Tools", "Development"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Version Control",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is Git used for?",
+    options: [
+      { id: "a", text: "Compiling code" },
+      { id: "b", text: "Version control" },
+      { id: "c", text: "Debugging" },
+      { id: "d", text: "Testing" }
+    ],
+    correctAnswer: "b",
+    explanation: "Git is a distributed version control system. Tracks changes, enables collaboration, branching, merging, history. Commands: clone, add, commit, push, pull, branch, merge.",
+    tags: ["Git", "Version Control", "Tools", "Development"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Testing",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is unit testing?",
+    options: [
+      { id: "a", text: "Testing the whole system" },
+      { id: "b", text: "Testing individual components/functions" },
+      { id: "c", text: "Testing by users" },
+      { id: "d", text: "Testing hardware" }
+    ],
+    correctAnswer: "b",
+    explanation: "Unit testing tests individual units (functions, classes) in isolation. Fast, repeatable, automated. Frameworks: Unity (embedded C), Google Test (C++), CMocka. TDD writes tests before code.",
+    tags: ["Testing", "Unit Testing", "Quality", "Development"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Optimization",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "How would you optimize code for memory-constrained embedded systems?",
+    correctAnswer: "Use smaller data types, avoid dynamic allocation, use const, pack structures, enable compiler optimizations, profile before optimizing.",
+    explanation: "Techniques: 1) Use uint8_t/uint16_t instead of int where possible, 2) Store constants in flash (const), 3) Avoid floating-point, 4) Bit fields for flags, 5) Static allocation, 6) Compiler flags (-Os), 7) Remove unused features, 8) Circular buffers instead of dynamic allocation.",
+    tags: ["Optimization", "Memory", "Embedded", "Performance"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Fresher",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What does IDE stand for?",
+    options: [
+      { id: "a", text: "Internet Development Environment" },
+      { id: "b", text: "Integrated Development Environment" },
+      { id: "c", text: "Internal Data Exchange" },
+      { id: "d", text: "Interface Design Editor" }
+    ],
+    correctAnswer: "b",
+    explanation: "IDE combines editor, compiler, debugger, and other tools. Examples: VS Code, Keil, STM32CubeIDE, Arduino IDE. Increases productivity by providing unified workflow.",
+    tags: ["IDE", "Tools", "Development", "Basics"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Fresher",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is the first step in troubleshooting a hardware issue?",
+    options: [
+      { id: "a", text: "Replace the CPU" },
+      { id: "b", text: "Check power supply and connections" },
+      { id: "c", text: "Rewrite the firmware" },
+      { id: "d", text: "Buy new components" }
+    ],
+    correctAnswer: "b",
+    explanation: "Always start with basics: 1) Power supply (voltage, current), 2) Ground connections, 3) Clock signals, 4) Reset line, 5) Physical connections, 6) Then move to software/configuration.",
+    tags: ["Troubleshooting", "Hardware", "Debugging", "Basics"],
+    source: "Common Interview"
   }
 ];
 
