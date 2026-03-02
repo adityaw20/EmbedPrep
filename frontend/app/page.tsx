@@ -6,7 +6,6 @@ import {
   Cpu,
   Code,
   Wifi,
-  Layers,
   Clock,
   MemoryStick,
   Globe,
@@ -16,6 +15,9 @@ import {
   BookOpen,
   TrendingUp,
   Users,
+  Zap,
+  Shield,
+  Award,
 } from 'lucide-react';
 import { statsApi, categoryApi } from '@/lib/api';
 import CategoryCard from '@/components/CategoryCard';
@@ -26,7 +28,7 @@ import type { Stats, Category } from '@/types';
 const features = [
   {
     icon: <BookOpen className="w-6 h-6" />,
-    title: '5000+ Questions',
+    title: '100+ Questions',
     description: 'Comprehensive question bank covering all embedded domains',
   },
   {
@@ -43,6 +45,16 @@ const features = [
     icon: <Users className="w-6 h-6" />,
     title: 'Community Driven',
     description: 'Contributions from industry professionals',
+  },
+  {
+    icon: <Zap className="w-6 h-6" />,
+    title: 'Fast & Lightweight',
+    description: 'No backend needed, loads instantly',
+  },
+  {
+    icon: <Shield className="w-6 h-6" />,
+    title: 'Always Available',
+    description: 'Works offline, no internet required after load',
   },
 ];
 
@@ -92,67 +104,86 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-hero-gradient" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.15)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.15)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 hero-gradient" />
+        <div className="absolute inset-0" style={{ 
+          background: 'radial-gradient(ellipse 80% 50% at 20% 40%, rgba(59, 130, 246, 0.15), transparent)'
+        }} />
+        <div className="absolute inset-0" style={{ 
+          background: 'radial-gradient(ellipse 60% 40% at 80% 60%, rgba(6, 182, 212, 0.1), transparent)'
+        }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 animate-fade-in"
+            style={{ 
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              border: '1px solid rgba(59, 130, 246, 0.3)',
+              color: 'var(--primary)'
+            }}>
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                style={{ backgroundColor: 'var(--primary)' }} />
+              <span className="relative inline-flex rounded-full h-2 w-2"
+                style={{ backgroundColor: 'var(--primary)' }} />
             </span>
-            Now with 5000+ curated questions
+            <span className="text-sm font-medium">
+              {stats?.totalQuestions || 100}+ curated questions
+            </span>
           </div>
 
           {/* Title */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
-            <span className="text-foreground">Master </span>
-            <span className="bg-gradient-to-r from-primary via-accent-cyan to-primary bg-clip-text text-transparent">
+            <span style={{ color: 'var(--foreground)' }}>Master </span>
+            <span className="gradient-text">
               Embedded Systems
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-foreground-secondary max-w-2xl mx-auto mb-10 animate-slide-up animation-delay-100">
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 animate-slide-up"
+            style={{ color: 'var(--foreground-secondary)' }}>
             The ultimate interview preparation platform for Firmware, IoT, and Embedded Engineers. 
-            Practice with 5000+ questions covering C, C++, Protocols, RTOS, and more.
+            Practice with {stats?.totalQuestions || 100}+ questions covering C, C++, Protocols, RTOS, and more.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up animation-delay-200">
-            <Link href="/c-mcq" className="btn-primary flex items-center gap-2 text-lg">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up">
+            <Link href="/main/c-mcq" className="btn-primary flex items-center gap-2 text-lg">
               Start Practicing
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link href="/interview" className="btn-secondary flex items-center gap-2 text-lg">
+            <Link href="/main/interview" className="btn-secondary flex items-center gap-2 text-lg">
               Interview Prep
             </Link>
           </div>
 
           {/* Stats */}
           {!loading && stats && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-slide-up animation-delay-300">
-              <div className="p-4 rounded-xl bg-card/50 border border-card-border backdrop-blur">
-                <p className="text-2xl sm:text-3xl font-bold text-foreground">
-                  {stats.totalQuestions.toLocaleString()}+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-slide-up"
+              style={{ animationDelay: '300ms' }}>
+              <div className="p-4 rounded-xl backdrop-blur transition-all duration-300 hover:scale-105"
+                style={{ backgroundColor: 'rgba(22, 22, 34, 0.5)', border: '1px solid var(--card-border)' }}>
+                <p className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--foreground)' }}>
+                  {stats.totalQuestions}+
                 </p>
-                <p className="text-sm text-foreground-secondary">Questions</p>
+                <p className="text-sm" style={{ color: 'var(--foreground-secondary)' }}>Questions</p>
               </div>
-              <div className="p-4 rounded-xl bg-card/50 border border-card-border backdrop-blur">
-                <p className="text-2xl sm:text-3xl font-bold text-foreground">
+              <div className="p-4 rounded-xl backdrop-blur transition-all duration-300 hover:scale-105"
+                style={{ backgroundColor: 'rgba(22, 22, 34, 0.5)', border: '1px solid var(--card-border)' }}>
+                <p className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--foreground)' }}>
                   {categories.length}
                 </p>
-                <p className="text-sm text-foreground-secondary">Categories</p>
+                <p className="text-sm" style={{ color: 'var(--foreground-secondary)' }}>Categories</p>
               </div>
-              <div className="p-4 rounded-xl bg-card/50 border border-card-border backdrop-blur">
-                <p className="text-2xl sm:text-3xl font-bold text-foreground">50+</p>
-                <p className="text-sm text-foreground-secondary">Topics</p>
+              <div className="p-4 rounded-xl backdrop-blur transition-all duration-300 hover:scale-105"
+                style={{ backgroundColor: 'rgba(22, 22, 34, 0.5)', border: '1px solid var(--card-border)' }}>
+                <p className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--foreground)' }}>50+</p>
+                <p className="text-sm" style={{ color: 'var(--foreground-secondary)' }}>Topics</p>
               </div>
-              <div className="p-4 rounded-xl bg-card/50 border border-card-border backdrop-blur">
-                <p className="text-2xl sm:text-3xl font-bold text-foreground">100%</p>
-                <p className="text-sm text-foreground-secondary">Free</p>
+              <div className="p-4 rounded-xl backdrop-blur transition-all duration-300 hover:scale-105"
+                style={{ backgroundColor: 'rgba(22, 22, 34, 0.5)', border: '1px solid var(--card-border)' }}>
+                <p className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--foreground)' }}>100%</p>
+                <p className="text-sm" style={{ color: 'var(--foreground-secondary)' }}>Free</p>
               </div>
             </div>
           )}
@@ -160,8 +191,9 @@ export default function HomePage() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-foreground-muted flex items-start justify-center p-2">
-            <div className="w-1.5 h-3 rounded-full bg-foreground-muted" />
+          <div className="w-6 h-10 rounded-full border-2 flex items-start justify-center p-2"
+            style={{ borderColor: 'var(--foreground-muted)' }}>
+            <div className="w-1.5 h-3 rounded-full" style={{ backgroundColor: 'var(--foreground-muted)' }} />
           </div>
         </div>
       </section>
@@ -170,10 +202,10 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Explore by Category
             </h2>
-            <p className="text-foreground-secondary max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto" style={{ color: 'var(--foreground-secondary)' }}>
               Dive deep into specific domains. Each category contains carefully curated questions 
               from basics to advanced topics.
             </p>
@@ -210,31 +242,35 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary">
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: 'var(--background-secondary)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Why Choose EmbedPrep?
             </h2>
-            <p className="text-foreground-secondary max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto" style={{ color: 'var(--foreground-secondary)' }}>
               Designed by embedded engineers, for embedded engineers
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <div
                 key={feature.title}
-                className="p-6 rounded-xl bg-card border border-card-border hover:border-primary/30 transition-all duration-300 group"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="p-6 rounded-xl transition-all duration-300 hover:scale-105 group"
+                style={{ 
+                  backgroundColor: 'var(--card)',
+                  border: '1px solid var(--card-border)'
+                }}
               >
-                <div className="p-3 rounded-lg bg-primary/10 text-primary w-fit mb-4 group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-lg w-fit mb-4 transition-transform group-hover:scale-110"
+                  style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: 'var(--primary)' }}>
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
+                <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--foreground)' }}>
                   {feature.title}
                 </h3>
-                <p className="text-sm text-foreground-secondary">
+                <p className="text-sm" style={{ color: 'var(--foreground-secondary)' }}>
                   {feature.description}
                 </p>
               </div>
@@ -246,21 +282,30 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="relative p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-primary/10 via-accent-purple/10 to-accent-cyan/10 border border-primary/30 overflow-hidden">
+          <div className="relative p-8 sm:p-12 rounded-2xl overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1))',
+              border: '1px solid rgba(59, 130, 246, 0.3)'
+            }}>
             {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-cyan/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
+              style={{ backgroundColor: 'rgba(59, 130, 246, 0.2)' }} />
+            <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"
+              style={{ backgroundColor: 'rgba(6, 182, 212, 0.2)' }} />
 
             <div className="relative z-10 text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Award className="w-8 h-8" style={{ color: 'var(--primary)' }} />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
                 Ready to Ace Your Interview?
               </h2>
-              <p className="text-foreground-secondary mb-8 max-w-xl mx-auto">
+              <p className="mb-8 max-w-xl mx-auto" style={{ color: 'var(--foreground-secondary)' }}>
                 Join thousands of engineers who have cracked their dream roles in embedded systems 
                 and IoT using EmbedPrep.
               </p>
               <Link
-                href="/interview"
+                href="/main/interview"
                 className="btn-primary inline-flex items-center gap-2 text-lg"
               >
                 Start Your Preparation

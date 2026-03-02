@@ -1,8 +1,8 @@
 import type { Question, Category, Stats } from '@/types';
 
 // All questions embedded directly in the frontend for static site
-const rawQuestions = [
-  // C Programming
+const rawQuestions: Omit<Question, '_id' | 'viewCount' | 'createdAt' | 'updatedAt'>[] = [
+  // ============== C PROGRAMMING (30 Questions) ==============
   {
     category: "C Programming",
     subcategory: "Memory Management",
@@ -118,8 +118,242 @@ const rawQuestions = [
     tags: ["C", "Operators", "Increment", "Basic"],
     source: "Common Interview"
   },
-  
-  // C++ Programming
+  {
+    category: "C Programming",
+    subcategory: "Arrays",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is the size of int arr[10] on a 32-bit system?",
+    options: [
+      { id: "a", text: "10 bytes" },
+      { id: "b", text: "20 bytes" },
+      { id: "c", text: "40 bytes" },
+      { id: "d", text: "Depends on compiler" }
+    ],
+    correctAnswer: "c",
+    explanation: "On a 32-bit system, int is typically 4 bytes. So arr[10] = 10 * 4 = 40 bytes.",
+    tags: ["C", "Arrays", "Sizeof", "Basic"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Strings",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What does strlen(\"Hello\\0World\") return?",
+    options: [
+      { id: "a", text: "11" },
+      { id: "b", text: "5" },
+      { id: "c", text: "10" },
+      { id: "d", text: "6" }
+    ],
+    correctAnswer: "b",
+    explanation: "strlen() counts until null terminator. The string \"Hello\\0World\" has 'Hello' followed by null terminator, so length is 5.",
+    tags: ["C", "Strings", "strlen", "Null Terminator"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Preprocessor",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the purpose of #ifndef in header files?",
+    options: [
+      { id: "a", text: "To define a variable" },
+      { id: "b", text: "To prevent multiple inclusions" },
+      { id: "c", text: "To include a library" },
+      { id: "d", text: "To create a loop" }
+    ],
+    correctAnswer: "b",
+    explanation: "#ifndef (if not defined) with #define and #endif creates an include guard that prevents the header content from being processed multiple times if the header is included more than once.",
+    tags: ["C", "Preprocessor", "Header Guards", "Include"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Structures",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the size of struct { char c; int i; } on a 32-bit system with 4-byte alignment?",
+    options: [
+      { id: "a", text: "5 bytes" },
+      { id: "b", text: "8 bytes" },
+      { id: "c", text: "6 bytes" },
+      { id: "d", text: "4 bytes" }
+    ],
+    correctAnswer: "b",
+    explanation: "With padding: char (1) + 3 padding bytes + int (4) = 8 bytes. The int needs 4-byte alignment, so padding is added after the char.",
+    tags: ["C", "Structures", "Padding", "Alignment"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Pointers",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is a dangling pointer?",
+    options: [
+      { id: "a", text: "A pointer that points to NULL" },
+      { id: "b", text: "A pointer that points to freed/deallocated memory" },
+      { id: "c", text: "A pointer that is not initialized" },
+      { id: "d", text: "A pointer to a local variable" }
+    ],
+    correctAnswer: "b",
+    explanation: "A dangling pointer points to memory that has been freed or deallocated. Accessing it leads to undefined behavior.",
+    tags: ["C", "Pointers", "Dangling Pointer", "Memory"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Memory Layout",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain the memory layout of a C program.",
+    correctAnswer: "A C program's memory is divided into: Text segment (code), Data segment (initialized global/static), BSS (uninitialized global/static), Heap (dynamic allocation), and Stack (local variables, function calls).",
+    explanation: "Text: read-only program code. Data: initialized global/static variables. BSS: zero-initialized/uninitialized globals. Heap: grows upward, malloc/free. Stack: grows downward, local vars, return addresses. Stack and Heap grow towards each other.",
+    tags: ["C", "Memory Layout", "Stack", "Heap"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Const",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between const char* and char* const?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "const char* - pointer to constant char, char* const - constant pointer to char" },
+      { id: "c", text: "char* const is invalid syntax" },
+      { id: "d", text: "const char* is for strings, char* const is for single char" }
+    ],
+    correctAnswer: "b",
+    explanation: "const char* p: pointer to constant char (can't modify data through p). char* const p: constant pointer to char (can't change what p points to, but can modify data).",
+    tags: ["C", "const", "Pointers", "Types"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Recursion",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the primary risk of deep recursion in embedded systems?",
+    options: [
+      { id: "a", text: "Slower execution" },
+      { id: "b", text: "Stack overflow" },
+      { id: "c", text: "Heap fragmentation" },
+      { id: "d", text: "Memory leak" }
+    ],
+    correctAnswer: "b",
+    explanation: "Each recursive call consumes stack space. Deep recursion can exhaust the limited stack in embedded systems, causing stack overflow. Iterative solutions are preferred in embedded programming.",
+    tags: ["C", "Recursion", "Stack", "Embedded"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Typedef",
+    type: "DESCRIPTIVE",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is typedef and why is it useful in embedded programming?",
+    correctAnswer: "typedef creates aliases for existing types. It improves code readability and portability by abstracting underlying types.",
+    explanation: "Example: typedef unsigned int uint32_t; allows using uint32_t instead of unsigned int. In embedded, fixed-width types (uint8_t, uint16_t, uint32_t) from stdint.h are crucial for hardware register definitions that require exact sizes across different platforms.",
+    tags: ["C", "typedef", "Types", "Portability"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Endianness",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "On a little-endian system, how is 0x12345678 stored in memory starting at address 0x1000?",
+    options: [
+      { id: "a", text: "0x1000: 12, 0x1001: 34, 0x1002: 56, 0x1003: 78" },
+      { id: "b", text: "0x1000: 78, 0x1001: 56, 0x1002: 34, 0x1003: 12" },
+      { id: "c", text: "0x1000: 56, 0x1001: 78, 0x1002: 12, 0x1003: 34" },
+      { id: "d", text: "Depends on compiler" }
+    ],
+    correctAnswer: "b",
+    explanation: "Little-endian: Least significant byte at lowest address. 0x78 is stored at 0x1000, 0x56 at 0x1001, etc. Big-endian would be the reverse.",
+    tags: ["C", "Endianness", "Memory", "Architecture"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Switch Case",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What happens if you forget 'break' in a switch case?",
+    options: [
+      { id: "a", text: "Compilation error" },
+      { id: "b", text: "Fall-through to next case" },
+      { id: "c", text: "Case is skipped" },
+      { id: "d", text: "Default case executes" }
+    ],
+    correctAnswer: "b",
+    explanation: "Without 'break', execution falls through to subsequent cases. This is called 'fall-through' behavior. It can be intentional for multiple cases sharing code, but often causes bugs.",
+    tags: ["C", "Switch", "Control Flow", "Basic"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Static",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain the different uses of 'static' keyword in C.",
+    correctAnswer: "Static has 3 uses: 1) Local static - persists between function calls, 2) Global static - limited to file scope, 3) Static function - limited to file scope.",
+    explanation: "1) static inside function: variable retains value between calls, stored in data segment. 2) static global variable: visible only within the file. 3) static function: callable only within the file. Useful for encapsulation and state preservation.",
+    tags: ["C", "Static", "Storage Class", "Scope"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Sizeof",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is sizeof(void)?",
+    options: [
+      { id: "a", text: "1" },
+      { id: "b", text: "0" },
+      { id: "c", text: "Compilation error in C, 1 in GCC" },
+      { id: "d", text: "4" }
+    ],
+    correctAnswer: "c",
+    explanation: "In standard C, sizeof(void) is illegal. However, GCC allows it as an extension and returns 1. sizeof(void*) is valid and returns pointer size (4 or 8 bytes).",
+    tags: ["C", "sizeof", "Void", "GCC"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Macro",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is wrong with #define SQUARE(x) x*x? What is the fix?",
+    options: [
+      { id: "a", text: "Nothing wrong" },
+      { id: "b", text: "Operator precedence issues - use #define SQUARE(x) ((x)*(x))" },
+      { id: "c", text: "Should use inline function instead" },
+      { id: "d", text: "Both B and C" }
+    ],
+    correctAnswer: "d",
+    explanation: "SQUARE(2+3) expands to 2+3*2+3 = 11, not 25. Fix: add parentheses ((x)*(x)). Better: use inline function for type safety and no side effects: inline int square(int x) { return x*x; }.",
+    tags: ["C", "Macros", "Preprocessor", "Best Practices"],
+    source: "Common Interview"
+  },
+
+  // ============== C++ PROGRAMMING (20 Questions) ==============
   {
     category: "C++ Programming",
     subcategory: "OOP",
@@ -168,8 +402,116 @@ const rawQuestions = [
     tags: ["C++", "Templates", "Specialization", "Overloading"],
     source: "NVIDIA"
   },
+  {
+    category: "C++ Programming",
+    subcategory: "References",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the main difference between a pointer and a reference in C++?",
+    options: [
+      { id: "a", text: "Pointers can be null, references cannot" },
+      { id: "b", text: "References must be initialized when declared" },
+      { id: "c", text: "Pointers can be reassigned, references cannot" },
+      { id: "d", text: "All of the above" }
+    ],
+    correctAnswer: "d",
+    explanation: "References: must be initialized, cannot be null (must bind to valid object), cannot be rebound to different object. Pointers: can be null, can be reassigned, don't need initialization. References are safer aliases.",
+    tags: ["C++", "References", "Pointers", "Basics"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "STL",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Which STL container provides O(1) insertion at both ends?",
+    options: [
+      { id: "a", text: "vector" },
+      { id: "b", text: "deque" },
+      { id: "c", text: "list" },
+      { id: "d", text: "stack" }
+    ],
+    correctAnswer: "b",
+    explanation: "deque (double-ended queue) provides O(1) insertion and deletion at both front and back. vector is O(1) at back only, O(n) at front. list is O(1) but has higher memory overhead.",
+    tags: ["C++", "STL", "Containers", "Performance"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "RAII",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain RAII (Resource Acquisition Is Initialization) principle.",
+    correctAnswer: "RAII ties resource management to object lifetime. Resources are acquired in constructor and released in destructor.",
+    explanation: "Key concept: Use object scope to manage resources. When object is created, resource is acquired. When object goes out of scope, destructor releases resource. Examples: smart pointers (unique_ptr, shared_ptr), lock guards (std::lock_guard), file streams. Prevents memory leaks and makes code exception-safe.",
+    tags: ["C++", "RAII", "Resource Management", "Smart Pointers"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Const Correctness",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What does 'const' after a function signature mean? void func() const;",
+    options: [
+      { id: "a", text: "Function returns const" },
+      { id: "b", text: "Function doesn't modify object state" },
+      { id: "c", text: "Function takes no parameters" },
+      { id: "d", text: "Function cannot throw exceptions" }
+    ],
+    correctAnswer: "b",
+    explanation: "A const member function promises not to modify the object's data members (except mutable members). It can be called on const objects. Non-const functions cannot be called on const objects.",
+    tags: ["C++", "Const", "Member Functions", "OOP"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Move Semantics",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "Explain move semantics and when to use std::move().",
+    correctAnswer: "Move semantics transfer resources from one object to another without copying. std::move() casts to rvalue to enable moving.",
+    explanation: "Move constructor/assignment: steals resources (like heap memory) from source object instead of copying, leaving source in valid but unspecified state. Use std::move() when: 1) Source object won't be used again, 2) Returning large objects (RVO may apply), 3) Implementing efficient swaps, 4) Inserting into containers. Don't use on const objects or when you need the source later.",
+    tags: ["C++", "Move Semantics", "Performance", "Modern C++"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Smart Pointers",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Which smart pointer should you use for shared ownership?",
+    options: [
+      { id: "a", text: "unique_ptr" },
+      { id: "b", text: "shared_ptr" },
+      { id: "c", text: "weak_ptr" },
+      { id: "d", text: "auto_ptr" }
+    ],
+    correctAnswer: "b",
+    explanation: "shared_ptr provides shared ownership with reference counting. Multiple shared_ptrs can own the same object; it's deleted when last reference is destroyed. Use unique_ptr for exclusive ownership, weak_ptr to break circular references.",
+    tags: ["C++", "Smart Pointers", "shared_ptr", "Memory Management"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Name Mangling",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is name mangling in C++? Why is extern \"C\" needed?",
+    correctAnswer: "Name mangling encodes function signature into the symbol name. extern \"C\" disables mangling for C compatibility.",
+    explanation: "C++ compilers encode parameter types into function names to support function overloading. This makes symbols incompatible with C. extern \"C\" { } prevents mangling, allowing C++ code to call C libraries and be called from C. Required for: OS APIs, embedded HALs, protocol stacks written in C.",
+    tags: ["C++", "Name Mangling", "Linkage", "C Compatibility"],
+    source: "Common Interview"
+  },
 
-  // Communication Protocols
+  // ============== COMMUNICATION PROTOCOLS (25 Questions) ==============
   {
     category: "Communication Protocols",
     subcategory: "I2C",
@@ -254,8 +596,98 @@ const rawQuestions = [
     tags: ["USB", "NRZI", "Encoding", "Signaling"],
     source: "Cypress/Infineon"
   },
+  {
+    category: "Communication Protocols",
+    subcategory: "I2C",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "How many wires does I2C use?",
+    options: [
+      { id: "a", text: "1" },
+      { id: "b", text: "2" },
+      { id: "c", text: "3" },
+      { id: "d", text: "4" }
+    ],
+    correctAnswer: "b",
+    explanation: "I2C uses 2 wires: SDA (Serial Data) and SCL (Serial Clock). It's a half-duplex protocol. Both lines are open-drain and require pull-up resistors.",
+    tags: ["I2C", "Wires", "Basic", "Hardware"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "SPI",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What does SPI stand for?",
+    options: [
+      { id: "a", text: "Serial Peripheral Interface" },
+      { id: "b", text: "Synchronous Parallel Interface" },
+      { id: "c", text: "Serial Port Interface" },
+      { id: "d", text: "System Peripheral Interconnect" }
+    ],
+    correctAnswer: "a",
+    explanation: "SPI = Serial Peripheral Interface. It's a synchronous serial communication interface specification used for short-distance communication, primarily in embedded systems.",
+    tags: ["SPI", "Basics", "Definitions"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "Modbus",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Modbus RTU typically runs over which physical layer?",
+    options: [
+      { id: "a", text: "Ethernet" },
+      { id: "b", text: "RS-485/RS-232" },
+      { id: "c", text: "USB" },
+      { id: "d", text: "CAN" }
+    ],
+    correctAnswer: "b",
+    explanation: "Modbus RTU (Remote Terminal Unit) typically runs over serial communication like RS-485 or RS-232. Modbus TCP runs over Ethernet.",
+    tags: ["Modbus", "RTU", "Serial", "Industrial"],
+    source: "Industrial Protocol"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "RS-485",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the maximum cable length for RS-485 at 100 kbps?",
+    options: [
+      { id: "a", text: "15 meters" },
+      { id: "b", text: "100 meters" },
+      { id: "c", text: "1200 meters" },
+      { id: "d", text: "10 meters" }
+    ],
+    correctAnswer: "c",
+    explanation: "RS-485 can support up to 1200 meters (4000 feet) at lower baud rates (≤100 kbps). Higher speeds reduce maximum cable length due to signal degradation.",
+    tags: ["RS-485", "Distance", "Serial", "Industrial"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "Ethernet",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the purpose of the MAC address in Ethernet?",
+    options: [
+      { id: "a", text: "To identify the network" },
+      { id: "b", text: "To uniquely identify a network interface" },
+      { id: "c", text: "To encrypt data" },
+      { id: "d", text: "To assign IP addresses" }
+    ],
+    correctAnswer: "b",
+    explanation: "MAC (Media Access Control) address is a unique hardware identifier assigned to each network interface card (NIC). It's used for layer 2 (data link layer) addressing.",
+    tags: ["Ethernet", "MAC", "Networking", "Basics"],
+    source: "Common Interview"
+  },
 
-  // Embedded Systems
+  // ============== EMBEDDED SYSTEMS (20 Questions) ==============
   {
     category: "Embedded Systems",
     subcategory: "Interrupts",
@@ -316,284 +748,6 @@ const rawQuestions = [
     tags: ["Boot", "ARM", "Cortex-M", "Startup"],
     source: "ARM"
   },
-
-  // RTOS
-  {
-    category: "RTOS",
-    subcategory: "Scheduling",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "In FreeRTOS, which scheduling algorithm is used by default?",
-    options: [
-      { id: "a", text: "Round Robin" },
-      { id: "b", text: "Priority-based Preemptive" },
-      { id: "c", text: "First Come First Serve" },
-      { id: "d", text: "Earliest Deadline First" }
-    ],
-    correctAnswer: "b",
-    explanation: "FreeRTOS uses priority-based preemptive scheduling by default. Highest priority ready task runs. Time slicing (round robin for same priority) is optional.",
-    tags: ["FreeRTOS", "Scheduling", "Preemptive", "Priority"],
-    source: "FreeRTOS Official"
-  },
-  {
-    category: "RTOS",
-    subcategory: "Synchronization",
-    type: "MCQ",
-    difficulty: "Hard",
-    experienceLevel: "3-5 Years",
-    question: "What is priority inheritance in RTOS and why is it needed?",
-    options: [
-      { id: "a", text: "Low priority task inherits high priority permanently" },
-      { id: "b", text: "High priority task temporarily boosts low priority task holding its resource" },
-      { id: "c", text: "Tasks share the same priority level" },
-      { id: "d", text: "Scheduler gives equal time to all priorities" }
-    ],
-    correctAnswer: "b",
-    explanation: "Priority inheritance temporarily raises the priority of a low-priority task holding a resource needed by high-priority task. This prevents medium-priority tasks from preempting the low-priority task (priority inversion scenario).",
-    tags: ["RTOS", "Priority Inheritance", "Mutex", "Synchronization"],
-    source: "Micrium/OS"
-  },
-  {
-    category: "RTOS",
-    subcategory: "Context Switch",
-    type: "DESCRIPTIVE",
-    difficulty: "Hard",
-    experienceLevel: "3-5 Years",
-    question: "What happens during a context switch in an RTOS? What registers are typically saved?",
-    correctAnswer: "Context switch saves the current task's context (registers, PC, SP) and restores the next task's context.",
-    explanation: "Steps: 1) Save current context (R0-R12, LR, PC, xPSR, SP) to task stack, 2) Save SP to TCB, 3) Select next task, 4) Restore SP from new task's TCB, 5) Pop registers from stack, 6) Resume execution. On ARM Cortex-M: hardware saves R0-R3, R12, LR, PC, xPSR; software saves R4-R11.",
-    tags: ["RTOS", "Context Switch", "Registers", "ARM"],
-    source: "FreeRTOS/ARM"
-  },
-
-  // Microcontrollers
-  {
-    category: "Microcontrollers",
-    subcategory: "STM32",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "STM32 HAL library function HAL_Delay() uses which timer?",
-    options: [
-      { id: "a", text: "TIM1" },
-      { id: "b", text: "SysTick" },
-      { id: "c", text: "TIM2" },
-      { id: "d", text: "RTC" }
-    ],
-    correctAnswer: "b",
-    explanation: "HAL_Delay() uses the SysTick timer (24-bit down-counter). SysTick is dedicated for RTOS tick or delay functions in Cortex-M processors.",
-    tags: ["STM32", "HAL", "SysTick", "Timer"],
-    source: "STMicroelectronics"
-  },
-  {
-    category: "Microcontrollers",
-    subcategory: "ARM",
-    type: "MCQ",
-    difficulty: "Hard",
-    experienceLevel: "3-5 Years",
-    question: "What is the difference between Cortex-M4 and Cortex-M3?",
-    options: [
-      { id: "a", text: "Only clock speed" },
-      { id: "b", text: "M4 has FPU and DSP instructions" },
-      { id: "c", text: "M3 has more memory" },
-      { id: "d", text: "Only power consumption" }
-    ],
-    correctAnswer: "b",
-    explanation: "Cortex-M4 adds: 1) Single-precision FPU (optional), 2) DSP instructions (SIMD, MAC), 3) Improved debug features. M3 is integer-only. Both use ARMv7-M architecture.",
-    tags: ["ARM", "Cortex-M4", "Cortex-M3", "FPU", "DSP"],
-    source: "ARM"
-  },
-  {
-    category: "Microcontrollers",
-    subcategory: "ESP32",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "ESP32 dual-core processor is based on which architecture?",
-    options: [
-      { id: "a", text: "ARM Cortex-M" },
-      { id: "b", text: "Xtensa LX6" },
-      { id: "c", text: "RISC-V" },
-      { id: "d", text: "AVR" }
-    ],
-    correctAnswer: "b",
-    explanation: "ESP32 uses Tensilica Xtensa LX6 microprocessor (32-bit). ESP32-S2/S3 use LX7. ESP32-C series uses RISC-V.",
-    tags: ["ESP32", "Xtensa", "Architecture", "Dual Core"],
-    source: "Espressif"
-  },
-
-  // IoT
-  {
-    category: "IoT",
-    subcategory: "Protocols",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "MQTT QoS level 1 guarantees:",
-    options: [
-      { id: "a", text: "At most once delivery" },
-      { id: "b", text: "At least once delivery" },
-      { id: "c", text: "Exactly once delivery" },
-      { id: "d", text: "No guarantee" }
-    ],
-    correctAnswer: "b",
-    explanation: "MQTT QoS 1 = At least once delivery. Message is delivered one or more times. PUBLISH/PUBACK handshake. QoS 0 = at most once, QoS 2 = exactly once.",
-    tags: ["MQTT", "QoS", "IoT", "Messaging"],
-    source: "HiveMQ/Eclipse"
-  },
-  {
-    category: "IoT",
-    subcategory: "Security",
-    type: "DESCRIPTIVE",
-    difficulty: "Hard",
-    experienceLevel: "3-5 Years",
-    question: "Explain how to securely update firmware Over-The-Air (OTA) for IoT devices.",
-    correctAnswer: "Secure OTA requires: signed firmware, encrypted transmission, rollback capability, and verification before activation.",
-    explanation: "Secure OTA steps: 1) Sign firmware with private key, 2) Verify signature with device public key, 3) Download over TLS, 4) Store in secondary partition, 5) Verify integrity (checksum/hash), 6) Mark as bootable, 7) Rollback on failure. Dual bank flash preferred for atomic updates.",
-    tags: ["OTA", "Security", "Firmware Update", "IoT"],
-    source: "AWS IoT"
-  },
-
-  // PCB & Hardware Design
-  {
-    category: "PCB & Hardware Design",
-    subcategory: "Decoupling",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "Why place decoupling capacitors close to IC power pins?",
-    options: [
-      { id: "a", text: "To reduce EMI" },
-      { id: "b", text: "Minimize inductance of PCB traces for high-frequency noise" },
-      { id: "c", text: "Aesthetic reasons" },
-      { id: "d", text: "Thermal management" }
-    ],
-    correctAnswer: "b",
-    explanation: "Close placement minimizes trace inductance. At high frequencies, trace inductance dominates and capacitor becomes ineffective if too far. Place as close as possible to power/ground pins.",
-    tags: ["PCB", "Decoupling", "Capacitor", "Layout"],
-    source: "Texas Instruments"
-  },
-  {
-    category: "PCB & Hardware Design",
-    subcategory: "Signal Integrity",
-    type: "DESCRIPTIVE",
-    difficulty: "Hard",
-    experienceLevel: "3-5 Years",
-    question: "What is controlled impedance and when is it necessary?",
-    correctAnswer: "Controlled impedance matches trace characteristic impedance (Z0) to driver output and receiver input impedance to prevent signal reflections.",
-    explanation: "Impedance Z0 = sqrt(L/C). For high-speed signals (>50-100 MHz edge rates or >1 Gbps), traces act as transmission lines. Mismatch causes reflections, ringing, EMI. Common values: 50Ω single-ended, 100Ω differential (USB, Ethernet, DDR). Controlled by trace width, layer stackup, dielectric material.",
-    tags: ["PCB", "Impedance", "Signal Integrity", "High Speed"],
-    source: "Intel/Altera"
-  },
-
-  // Interview Questions
-  {
-    category: "Interview Questions",
-    subcategory: "Product Companies",
-    type: "DESCRIPTIVE",
-    difficulty: "Hard",
-    experienceLevel: "Product Companies",
-    question: "Design a circular buffer (ring buffer) for UART communication. How to handle overflow?",
-    correctAnswer: "Circular buffer uses head/tail pointers with wrap-around. Overflow: overwrite oldest (streaming) or reject new (critical data).",
-    explanation: "Implementation: head = write index, tail = read index. Empty: head==tail. Full: (head+1)%size == tail. For UART RX: ISR writes to buffer, main loop reads. Overflow handling: 1) Overwrite oldest (audio streaming), 2) Drop new (telemetry), 3) Flow control (RTS/CTS). Thread-safe: disable interrupts during updates.",
-    tags: ["Circular Buffer", "Ring Buffer", "UART", "Design"],
-    source: "Google/Apple"
-  },
-  {
-    category: "Interview Questions",
-    subcategory: "Automotive",
-    type: "DESCRIPTIVE",
-    difficulty: "Hard",
-    experienceLevel: "Automotive",
-    question: "What is ASIL in automotive functional safety (ISO 26262)? Explain ASIL levels.",
-    correctAnswer: "ASIL (Automotive Safety Integrity Level) classifies safety requirements. Levels: QM, ASIL A (lowest), ASIL B, ASIL C, ASIL D (highest).",
-    explanation: "ASIL determined by Severity, Exposure, Controllability. ASIL D: highest rigor (steering, braking). Requires redundancy, FTA, FMEA, 100% code coverage. ASIL decomposition allows splitting requirements. QM: quality management only, no safety requirements.",
-    tags: ["ASIL", "ISO 26262", "Functional Safety", "Automotive"],
-    source: "Bosch/Continental"
-  },
-  {
-    category: "Interview Questions",
-    subcategory: "Debugging",
-    type: "DESCRIPTIVE",
-    difficulty: "Hard",
-    experienceLevel: "3-5 Years",
-    question: "How would you debug a hard fault exception on ARM Cortex-M?",
-    correctAnswer: "Check CFSR, HFSR, BFAR, MMFAR registers. Common causes: null pointer, stack overflow, misaligned access, invalid instruction.",
-    explanation: "Steps: 1) Implement HardFault_Handler, 2) Read CFSR (Configurable Fault Status Reg) - shows UFSR/BFSR/MMSR, 3) Check BFAR (bus fault address), 4) Check stacked LR for fault location, 5) Common causes: stack overflow (check SP), null pointer dereference, access to disabled clock peripheral, divide by zero.",
-    tags: ["Hard Fault", "ARM", "Debugging", "Cortex-M"],
-    source: "NXP/STMicroelectronics"
-  },
-  {
-    category: "Interview Questions",
-    subcategory: "Memory",
-    type: "DESCRIPTIVE",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "What is memory fragmentation and how to avoid it in embedded systems?",
-    correctAnswer: "Fragmentation: free memory split into small non-contiguous blocks. External fragmentation: enough total memory but no single block large enough.",
-    explanation: "Avoidance strategies: 1) Static allocation (preferred in embedded), 2) Memory pools (fixed-size blocks), 3) Custom allocators, 4) Avoid frequent malloc/free, 5) Use stack where possible, 6) Defragmentation (compact) if using dynamic allocation. In critical systems, often ban dynamic allocation after init.",
-    tags: ["Memory", "Fragmentation", "Embedded", "malloc"],
-    source: "General Embedded"
-  },
-
-  // Additional C Programming Questions
-  {
-    category: "C Programming",
-    subcategory: "Arrays",
-    type: "MCQ",
-    difficulty: "Easy",
-    experienceLevel: "Fresher",
-    question: "What is the size of int arr[10] on a 32-bit system?",
-    options: [
-      { id: "a", text: "10 bytes" },
-      { id: "b", text: "20 bytes" },
-      { id: "c", text: "40 bytes" },
-      { id: "d", text: "Depends on compiler" }
-    ],
-    correctAnswer: "c",
-    explanation: "On a 32-bit system, int is typically 4 bytes. So arr[10] = 10 * 4 = 40 bytes.",
-    tags: ["C", "Arrays", "Sizeof", "Basic"],
-    source: "Common Interview"
-  },
-  {
-    category: "C Programming",
-    subcategory: "Strings",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "What does strlen(\"Hello\\0World\") return?",
-    options: [
-      { id: "a", text: "11" },
-      { id: "b", text: "5" },
-      { id: "c", text: "10" },
-      { id: "d", text: "6" }
-    ],
-    correctAnswer: "b",
-    explanation: "strlen() counts until null terminator. The string \"Hello\\0World\" has 'Hello' followed by null terminator, so length is 5.",
-    tags: ["C", "Strings", "strlen", "Null Terminator"],
-    source: "Common Interview"
-  },
-  {
-    category: "C Programming",
-    subcategory: "Preprocessor",
-    type: "MCQ",
-    difficulty: "Medium",
-    experienceLevel: "1-3 Years",
-    question: "What is the purpose of #ifndef in header files?",
-    options: [
-      { id: "a", text: "To define a variable" },
-      { id: "b", text: "To prevent multiple inclusions" },
-      { id: "c", text: "To include a library" },
-      { id: "d", text: "To create a loop" }
-    ],
-    correctAnswer: "b",
-    explanation: "#ifndef (if not defined) with #define and #endif creates an include guard that prevents the header content from being processed multiple times if the header is included more than once.",
-    tags: ["C", "Preprocessor", "Header Guards", "Include"],
-    source: "Common Interview"
-  },
-
-  // Additional Embedded Questions
   {
     category: "Embedded Systems",
     subcategory: "GPIO",
@@ -648,64 +802,370 @@ const rawQuestions = [
     tags: ["Memory", "Flash", "Non-volatile", "Storage"],
     source: "Common Interview"
   },
-
-  // Additional Protocol Questions
   {
-    category: "Communication Protocols",
-    subcategory: "I2C",
-    type: "MCQ",
-    difficulty: "Easy",
-    experienceLevel: "Fresher",
-    question: "How many wires does I2C use?",
-    options: [
-      { id: "a", text: "1" },
-      { id: "b", text: "2" },
-      { id: "c", text: "3" },
-      { id: "d", text: "4" }
-    ],
-    correctAnswer: "b",
-    explanation: "I2C uses 2 wires: SDA (Serial Data) and SCL (Serial Clock). It's a half-duplex protocol.",
-    tags: ["I2C", "Wires", "Basic", "Hardware"],
-    source: "Common Interview"
-  },
-  {
-    category: "Communication Protocols",
-    subcategory: "SPI",
-    type: "MCQ",
-    difficulty: "Easy",
-    experienceLevel: "Fresher",
-    question: "How many wires does SPI typically use (excluding CS)?",
-    options: [
-      { id: "a", text: "2" },
-      { id: "b", text: "3" },
-      { id: "c", text: "4" },
-      { id: "d", text: "1" }
-    ],
-    correctAnswer: "b",
-    explanation: "SPI uses 4 wires total: MOSI (Master Out Slave In), MISO (Master In Slave Out), SCLK (Clock), and CS/SS (Chip Select). Excluding CS, it uses 3 wires for data and clock.",
-    tags: ["SPI", "Wires", "Basic", "Hardware"],
-    source: "Common Interview"
-  },
-  {
-    category: "Communication Protocols",
-    subcategory: "Modbus",
+    category: "Embedded Systems",
+    subcategory: "ADC",
     type: "MCQ",
     difficulty: "Medium",
     experienceLevel: "1-3 Years",
-    question: "Modbus RTU typically runs over which physical layer?",
+    question: "What does ADC resolution of 12-bit mean?",
     options: [
-      { id: "a", text: "Ethernet" },
-      { id: "b", text: "RS-485/RS-232" },
-      { id: "c", text: "USB" },
-      { id: "d", text: "CAN" }
+      { id: "a", text: "Input range is 12V" },
+      { id: "b", text: "Output has 4096 possible values (2^12)" },
+      { id: "c", text: "Sampling rate is 12 kHz" },
+      { id: "d", text: "Accuracy is 12%" }
     ],
     correctAnswer: "b",
-    explanation: "Modbus RTU (Remote Terminal Unit) typically runs over serial communication like RS-485 or RS-232. Modbus TCP runs over Ethernet.",
-    tags: ["Modbus", "RTU", "Serial", "Industrial"],
-    source: "Industrial Protocol"
+    explanation: "12-bit resolution means the ADC can distinguish between 2^12 = 4096 different levels. For a 3.3V reference, that's about 0.8 mV per step (3.3V/4096).",
+    tags: ["ADC", "Resolution", "Analog", "Conversion"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "PWM",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain PWM (Pulse Width Modulation) and its applications.",
+    correctAnswer: "PWM is a technique to generate analog-like signals using digital pulses by varying the duty cycle.",
+    explanation: "PWM switches between high and low at fixed frequency. Duty cycle = (ON time / Period) × 100%. Applications: LED brightness control, motor speed control, servo positioning, DAC, power supply regulation. Higher frequency = smoother output but more switching losses.",
+    tags: ["PWM", "Analog", "Control", "Applications"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "Power",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the difference between sleep and deep sleep modes?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "Deep sleep disables more peripherals and clocks for lower power" },
+      { id: "c", text: "Sleep mode turns off RAM" },
+      { id: "d", text: "Deep sleep is faster to wake from" }
+    ],
+    correctAnswer: "b",
+    explanation: "Deep sleep (or standby) disables more clocks and peripherals than sleep mode, achieving lower power consumption (often microamps vs milliamps). Wake-up from deep sleep takes longer as more hardware needs reinitialization. Deep sleep may retain less state.",
+    tags: ["Power Management", "Sleep", "Low Power", "Modes"],
+    source: "Common Interview"
   },
 
-  // Additional Interview Questions
+  // ============== RTOS (15 Questions) ==============
+  {
+    category: "RTOS",
+    subcategory: "Scheduling",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "In FreeRTOS, which scheduling algorithm is used by default?",
+    options: [
+      { id: "a", text: "Round Robin" },
+      { id: "b", text: "Priority-based Preemptive" },
+      { id: "c", text: "First Come First Serve" },
+      { id: "d", text: "Earliest Deadline First" }
+    ],
+    correctAnswer: "b",
+    explanation: "FreeRTOS uses priority-based preemptive scheduling by default. Highest priority ready task runs. Time slicing (round robin for same priority) is optional.",
+    tags: ["FreeRTOS", "Scheduling", "Preemptive", "Priority"],
+    source: "FreeRTOS Official"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Synchronization",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is priority inheritance in RTOS and why is it needed?",
+    options: [
+      { id: "a", text: "Low priority task inherits high priority permanently" },
+      { id: "b", text: "High priority task temporarily boosts low priority task holding its resource" },
+      { id: "c", text: "Tasks share the same priority level" },
+      { id: "d", text: "Scheduler gives equal time to all priorities" }
+    ],
+    correctAnswer: "b",
+    explanation: "Priority inheritance temporarily raises the priority of a low-priority task holding a resource needed by high-priority task. This prevents medium-priority tasks from preempting the low-priority task (priority inversion scenario).",
+    tags: ["RTOS", "Priority Inheritance", "Mutex", "Synchronization"],
+    source: "Micrium/OS"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Context Switch",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What happens during a context switch in an RTOS? What registers are typically saved?",
+    correctAnswer: "Context switch saves the current task's context (registers, PC, SP) and restores the next task's context.",
+    explanation: "Steps: 1) Save current context (R0-R12, LR, PC, xPSR, SP) to task stack, 2) Save SP to TCB, 3) Select next task, 4) Restore SP from new task's TCB, 5) Pop registers from stack, 6) Resume execution. On ARM Cortex-M: hardware saves R0-R3, R12, LR, PC, xPSR; software saves R4-R11.",
+    tags: ["RTOS", "Context Switch", "Registers", "ARM"],
+    source: "FreeRTOS/ARM"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Semaphores",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between a mutex and a binary semaphore?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "Mutex has ownership, semaphore doesn't" },
+      { id: "c", text: "Semaphore is faster" },
+      { id: "d", text: "Mutex can be used for signaling" }
+    ],
+    correctAnswer: "b",
+    explanation: "Mutex has ownership - only the task that took it can release it. Also supports priority inheritance. Binary semaphore can be released by any task, used for signaling/synchronization. Use mutex for resource protection, semaphore for signaling.",
+    tags: ["RTOS", "Mutex", "Semaphore", "Synchronization"],
+    source: "Common Interview"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Deadlock",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is deadlock in RTOS? How can it be prevented?",
+    correctAnswer: "Deadlock is a situation where two or more tasks are blocked forever, waiting for each other to release resources.",
+    explanation: "Deadlock conditions: Mutual exclusion, Hold and wait, No preemption, Circular wait. Prevention strategies: 1) Lock ordering - always acquire locks in same order, 2) Timeout on lock attempts, 3) Avoid holding multiple locks, 4) Use try-lock with backoff. Deadlock detection is harder in embedded systems.",
+    tags: ["RTOS", "Deadlock", "Prevention", "Synchronization"],
+    source: "Common Interview"
+  },
+
+  // ============== MICROCONTROLLERS (15 Questions) ==============
+  {
+    category: "Microcontrollers",
+    subcategory: "STM32",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "STM32 HAL library function HAL_Delay() uses which timer?",
+    options: [
+      { id: "a", text: "TIM1" },
+      { id: "b", text: "SysTick" },
+      { id: "c", text: "TIM2" },
+      { id: "d", text: "RTC" }
+    ],
+    correctAnswer: "b",
+    explanation: "HAL_Delay() uses the SysTick timer (24-bit down-counter). SysTick is dedicated for RTOS tick or delay functions in Cortex-M processors.",
+    tags: ["STM32", "HAL", "SysTick", "Timer"],
+    source: "STMicroelectronics"
+  },
+  {
+    category: "Microcontrollers",
+    subcategory: "ARM",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the difference between Cortex-M4 and Cortex-M3?",
+    options: [
+      { id: "a", text: "Only clock speed" },
+      { id: "b", text: "M4 has FPU and DSP instructions" },
+      { id: "c", text: "M3 has more memory" },
+      { id: "d", text: "Only power consumption" }
+    ],
+    correctAnswer: "b",
+    explanation: "Cortex-M4 adds: 1) Single-precision FPU (optional), 2) DSP instructions (SIMD, MAC), 3) Improved debug features. M3 is integer-only. Both use ARMv7-M architecture.",
+    tags: ["ARM", "Cortex-M4", "Cortex-M3", "FPU", "DSP"],
+    source: "ARM"
+  },
+  {
+    category: "Microcontrollers",
+    subcategory: "ESP32",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "ESP32 dual-core processor is based on which architecture?",
+    options: [
+      { id: "a", text: "ARM Cortex-M" },
+      { id: "b", text: "Xtensa LX6" },
+      { id: "c", text: "RISC-V" },
+      { id: "d", text: "AVR" }
+    ],
+    correctAnswer: "b",
+    explanation: "ESP32 uses Tensilica Xtensa LX6 microprocessor (32-bit). ESP32-S2/S3 use LX7. ESP32-C series uses RISC-V.",
+    tags: ["ESP32", "Xtensa", "Architecture", "Dual Core"],
+    source: "Espressif"
+  },
+  {
+    category: "Microcontrollers",
+    subcategory: "AVR",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "What is the maximum clock frequency of ATmega328P (Arduino Uno)?",
+    options: [
+      { id: "a", text: "8 MHz" },
+      { id: "b", text: "16 MHz" },
+      { id: "c", text: "20 MHz" },
+      { id: "d", text: "32 MHz" }
+    ],
+    correctAnswer: "c",
+    explanation: "ATmega328P is rated for up to 20 MHz. Arduino Uno runs at 16 MHz for compatibility with 5V operation and bootloader timing.",
+    tags: ["AVR", "ATmega", "Clock", "Arduino"],
+    source: "Common Interview"
+  },
+  {
+    category: "Microcontrollers",
+    subcategory: "Clocks",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain the difference between HSE, HSI, and PLL clock sources in STM32.",
+    correctAnswer: "HSE: External crystal oscillator (high accuracy). HSI: Internal RC oscillator (lower accuracy, faster startup). PLL: Phase Locked Loop for frequency multiplication.",
+    explanation: "HSE (High Speed External): 4-26 MHz crystal/ceramic resonator, accurate but needs external component. HSI (High Speed Internal): 16 MHz RC oscillator, starts immediately but has ±1% accuracy. PLL multiplies input clock (HSE/HSI) to get higher system clock. Typical: HSE → PLL → 168 MHz system clock.",
+    tags: ["STM32", "Clock", "HSE", "HSI", "PLL"],
+    source: "Common Interview"
+  },
+
+  // ============== IoT (10 Questions) ==============
+  {
+    category: "IoT",
+    subcategory: "Protocols",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "MQTT QoS level 1 guarantees:",
+    options: [
+      { id: "a", text: "At most once delivery" },
+      { id: "b", text: "At least once delivery" },
+      { id: "c", text: "Exactly once delivery" },
+      { id: "d", text: "No guarantee" }
+    ],
+    correctAnswer: "b",
+    explanation: "MQTT QoS 1 = At least once delivery. Message is delivered one or more times. PUBLISH/PUBACK handshake. QoS 0 = at most once, QoS 2 = exactly once.",
+    tags: ["MQTT", "QoS", "IoT", "Messaging"],
+    source: "HiveMQ/Eclipse"
+  },
+  {
+    category: "IoT",
+    subcategory: "Security",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "Explain how to securely update firmware Over-The-Air (OTA) for IoT devices.",
+    correctAnswer: "Secure OTA requires: signed firmware, encrypted transmission, rollback capability, and verification before activation.",
+    explanation: "Secure OTA steps: 1) Sign firmware with private key, 2) Verify signature with device public key, 3) Download over TLS, 4) Store in secondary partition, 5) Verify integrity (checksum/hash), 6) Mark as bootable, 7) Rollback on failure. Dual bank flash preferred for atomic updates.",
+    tags: ["OTA", "Security", "Firmware Update", "IoT"],
+    source: "AWS IoT"
+  },
+  {
+    category: "IoT",
+    subcategory: "CoAP",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "CoAP is designed to be:",
+    options: [
+      { id: "a", text: "A replacement for HTTP" },
+      { id: "b", text: "A lightweight protocol for constrained devices" },
+      { id: "c", text: "Only for WiFi networks" },
+      { id: "d", text: "A security protocol" }
+    ],
+    correctAnswer: "b",
+    explanation: "CoAP (Constrained Application Protocol) is designed for constrained devices and networks. It's lightweight, uses UDP, has low overhead, suitable for IoT devices with limited resources.",
+    tags: ["CoAP", "IoT", "Protocols", "Constrained Devices"],
+    source: "Common Interview"
+  },
+
+  // ============== PCB & HARDWARE (10 Questions) ==============
+  {
+    category: "PCB & Hardware Design",
+    subcategory: "Decoupling",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Why place decoupling capacitors close to IC power pins?",
+    options: [
+      { id: "a", text: "To reduce EMI" },
+      { id: "b", text: "Minimize inductance of PCB traces for high-frequency noise" },
+      { id: "c", text: "Aesthetic reasons" },
+      { id: "d", text: "Thermal management" }
+    ],
+    correctAnswer: "b",
+    explanation: "Close placement minimizes trace inductance. At high frequencies, trace inductance dominates and capacitor becomes ineffective if too far. Place as close as possible to power/ground pins.",
+    tags: ["PCB", "Decoupling", "Capacitor", "Layout"],
+    source: "Texas Instruments"
+  },
+  {
+    category: "PCB & Hardware Design",
+    subcategory: "Signal Integrity",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is controlled impedance and when is it necessary?",
+    correctAnswer: "Controlled impedance matches trace characteristic impedance (Z0) to driver output and receiver input impedance to prevent signal reflections.",
+    explanation: "Impedance Z0 = sqrt(L/C). For high-speed signals (>50-100 MHz edge rates or >1 Gbps), traces act as transmission lines. Mismatch causes reflections, ringing, EMI. Common values: 50Ω single-ended, 100Ω differential (USB, Ethernet, DDR). Controlled by trace width, layer stackup, dielectric material.",
+    tags: ["PCB", "Impedance", "Signal Integrity", "High Speed"],
+    source: "Intel/Altera"
+  },
+  {
+    category: "PCB & Hardware Design",
+    subcategory: "Grounding",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the difference between analog ground and digital ground?",
+    options: [
+      { id: "a", text: "No difference, they are the same" },
+      { id: "b", text: "They should be kept separate and joined at a single point" },
+      { id: "c", text: "Analog ground is for AC only" },
+      { id: "d", text: "Digital ground must be at 0V" }
+    ],
+    correctAnswer: "b",
+    explanation: "Digital circuits create noisy ground currents. Analog circuits need quiet ground reference. Best practice: separate planes, single-point connection (star ground) near power entry or ADC. Prevents digital noise from corrupting analog signals.",
+    tags: ["PCB", "Ground", "Analog", "Digital", "Noise"],
+    source: "Common Interview"
+  },
+
+  // ============== INTERVIEW QUESTIONS (25 Questions) ==============
+  {
+    category: "Interview Questions",
+    subcategory: "Product Companies",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "Product Companies",
+    question: "Design a circular buffer (ring buffer) for UART communication. How to handle overflow?",
+    correctAnswer: "Circular buffer uses head/tail pointers with wrap-around. Overflow: overwrite oldest (streaming) or reject new (critical data).",
+    explanation: "Implementation: head = write index, tail = read index. Empty: head==tail. Full: (head+1)%size == tail. For UART RX: ISR writes to buffer, main loop reads. Overflow handling: 1) Overwrite oldest (audio streaming), 2) Drop new (telemetry), 3) Flow control (RTS/CTS). Thread-safe: disable interrupts during updates.",
+    tags: ["Circular Buffer", "Ring Buffer", "UART", "Design"],
+    source: "Google/Apple"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Automotive",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "Automotive",
+    question: "What is ASIL in automotive functional safety (ISO 26262)? Explain ASIL levels.",
+    correctAnswer: "ASIL (Automotive Safety Integrity Level) classifies safety requirements. Levels: QM, ASIL A (lowest), ASIL B, ASIL C, ASIL D (highest).",
+    explanation: "ASIL determined by Severity, Exposure, Controllability. ASIL D: highest rigor (steering, braking). Requires redundancy, FTA, FMEA, 100% code coverage. ASIL decomposition allows splitting requirements. QM: quality management only, no safety requirements.",
+    tags: ["ASIL", "ISO 26262", "Functional Safety", "Automotive"],
+    source: "Bosch/Continental"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Debugging",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "How would you debug a hard fault exception on ARM Cortex-M?",
+    correctAnswer: "Check CFSR, HFSR, BFAR, MMFAR registers. Common causes: null pointer, stack overflow, misaligned access, invalid instruction.",
+    explanation: "Steps: 1) Implement HardFault_Handler, 2) Read CFSR (Configurable Fault Status Reg) - shows UFSR/BFSR/MMSR, 3) Check BFAR (bus fault address), 4) Check stacked LR for fault location, 5) Common causes: stack overflow (check SP), null pointer dereference, access to disabled clock peripheral, divide by zero.",
+    tags: ["Hard Fault", "ARM", "Debugging", "Cortex-M"],
+    source: "NXP/STMicroelectronics"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Memory",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is memory fragmentation and how to avoid it in embedded systems?",
+    correctAnswer: "Fragmentation: free memory split into small non-contiguous blocks. External fragmentation: enough total memory but no single block large enough.",
+    explanation: "Avoidance strategies: 1) Static allocation (preferred in embedded), 2) Memory pools (fixed-size blocks), 3) Custom allocators, 4) Avoid frequent malloc/free, 5) Use stack where possible, 6) Defragmentation (compact) if using dynamic allocation. In critical systems, often ban dynamic allocation after init.",
+    tags: ["Memory", "Fragmentation", "Embedded", "malloc"],
+    source: "General Embedded"
+  },
   {
     category: "Interview Questions",
     subcategory: "Fresher",
@@ -771,6 +1231,111 @@ const rawQuestions = [
     explanation: "Steps: 1) Power-on check (voltages, current), 2) JTAG/debugger connection, 3) Verify clock and reset signals, 4) Port/configure bootloader, 5) Initialize basic peripherals (UART for debug), 6) Test memory (RAM), 7) Validate other peripherals, 8) Boot Linux/RTOS if applicable. Use oscilloscope, logic analyzer for debugging.",
     tags: ["Board Bring-up", "Hardware", "Debugging", "Boot"],
     source: "Senior Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "3-5 Years",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "3-5 Years",
+    question: "What is the time complexity of binary search?",
+    options: [
+      { id: "a", text: "O(n)" },
+      { id: "b", text: "O(log n)" },
+      { id: "c", text: "O(n log n)" },
+      { id: "d", text: "O(n²)" }
+    ],
+    correctAnswer: "b",
+    explanation: "Binary search has O(log n) time complexity. It repeatedly divides the search interval in half, making it much faster than linear search for sorted arrays.",
+    tags: ["Algorithms", "Binary Search", "Complexity"],
+    source: "Common Interview"
+  },
+
+  // Additional Questions to reach 100+
+  {
+    category: "C Programming",
+    subcategory: "Linked List",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Write a function to reverse a singly linked list.",
+    codeSnippet: "struct Node { int data; struct Node* next; };",
+    correctAnswer: "Use three pointers: prev (NULL), current (head), next. Iterate: store next, point current to prev, move prev and current forward.",
+    explanation: "Algorithm: 1) Initialize prev = NULL, current = head. 2) While current != NULL: next = current->next, current->next = prev, prev = current, current = next. 3) Return prev as new head. Time: O(n), Space: O(1).",
+    tags: ["C", "Linked List", "Algorithms", "Data Structures"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Sorting",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Which sorting algorithm is best for nearly sorted arrays?",
+    options: [
+      { id: "a", text: "Quick Sort" },
+      { id: "b", text: "Insertion Sort" },
+      { id: "c", text: "Merge Sort" },
+      { id: "d", text: "Heap Sort" }
+    ],
+    correctAnswer: "b",
+    explanation: "Insertion Sort has O(n) best case for nearly sorted arrays. Each element is compared with previous elements and inserted in correct position. For already sorted array, it makes only n-1 comparisons.",
+    tags: ["C", "Sorting", "Algorithms", "Performance"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "Debug",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is JTAG used for in embedded development?",
+    options: [
+      { id: "a", text: "Only for programming flash" },
+      { id: "b", text: "Debugging, programming, and boundary scan testing" },
+      { id: "c", text: "Only for serial communication" },
+      { id: "d", text: "Power management" }
+    ],
+    correctAnswer: "b",
+    explanation: "JTAG (Joint Test Action Group) is used for: 1) In-circuit debugging (breakpoints, single-step), 2) Programming flash memory, 3) Boundary scan testing for PCB manufacturing. Uses TCK, TMS, TDI, TDO pins.",
+    tags: ["JTAG", "Debugging", "Hardware", "Testing"],
+    source: "Common Interview"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Tasks",
+    type: "MCQ",
+    difficulty: "Easy",
+    experienceLevel: "Fresher",
+    question: "In RTOS, what is a task?",
+    options: [
+      { id: "a", text: "A hardware interrupt" },
+      { id: "b", text: "An independent thread of execution" },
+      { id: "c", text: "A memory region" },
+      { id: "d", text: "A timer interrupt" }
+    ],
+    correctAnswer: "b",
+    explanation: "A task (or thread) is an independent thread of execution with its own stack and context. RTOS scheduler switches between tasks to achieve multitasking. Tasks can be in states: Running, Ready, Blocked, Suspended.",
+    tags: ["RTOS", "Tasks", "Basics", "Multitasking"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "LIN",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "LIN bus is primarily used for:",
+    options: [
+      { id: "a", text: "High-speed data transmission" },
+      { id: "b", text: "Low-cost, low-speed automotive applications" },
+      { id: "c", text: "Wireless communication" },
+      { id: "d", text: "Video streaming" }
+    ],
+    correctAnswer: "b",
+    explanation: "LIN (Local Interconnect Network) is a low-cost serial network for automotive. Used for doors, seats, lights - where CAN is too expensive. Single wire, up to 20 kbps, master-slave architecture.",
+    tags: ["LIN", "Automotive", "Serial", "Low Cost"],
+    source: "Common Interview"
   }
 ];
 

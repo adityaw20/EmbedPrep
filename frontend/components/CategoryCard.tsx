@@ -2,90 +2,127 @@
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { cn, getCategoryIcon, getCategoryGradient } from '@/lib/utils';
 
 interface CategoryCardProps {
   name: string;
   count: number;
-  subcategories?: string[];
-  description?: string;
-  href?: string;
+  subcategories: string[];
+  description: string;
 }
 
-export default function CategoryCard({
-  name,
-  count,
-  subcategories = [],
-  description,
-  href,
-}: CategoryCardProps) {
-  const cardHref = href || `/?category=${encodeURIComponent(name)}`;
+const categoryIcons: Record<string, string> = {
+  'C Programming': '💻',
+  'C++ Programming': '⚡',
+  'Communication Protocols': '📡',
+  'Embedded Systems': '🔧',
+  'RTOS': '⏱️',
+  'Microcontrollers': '🔌',
+  'IoT': '🌐',
+  'PCB & Hardware Design': '📐',
+  'Interview Questions': '🎯',
+};
 
+const categoryColors: Record<string, string> = {
+  'C Programming': '#3b82f6',
+  'C++ Programming': '#06b6d4',
+  'Communication Protocols': '#8b5cf6',
+  'Embedded Systems': '#10b981',
+  'RTOS': '#f59e0b',
+  'Microcontrollers': '#ef4444',
+  'IoT': '#06b6d4',
+  'PCB & Hardware Design': '#84cc16',
+  'Interview Questions': '#f97316',
+};
+
+export default function CategoryCard({ name, count, subcategories, description }: CategoryCardProps) {
+  const icon = categoryIcons[name] || '📚';
+  const color = categoryColors[name] || '#3b82f6';
+  
   return (
-    <Link href={cardHref}>
-      <div
-        className={cn(
-          'group relative p-6 rounded-xl border border-card-border bg-card',
-          'hover:border-primary/50 transition-all duration-300 overflow-hidden'
-        )}
-      >
-        {/* Background Gradient */}
-        <div
-          className={cn(
-            'absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500',
-            getCategoryGradient(name)
-          )}
-        />
-
-        {/* Content */}
-        <div className="relative z-10">
-          {/* Icon & Count */}
-          <div className="flex items-start justify-between mb-4">
-            <div className="p-3 rounded-xl bg-background-secondary border border-card-border group-hover:border-primary/30 transition-colors">
-              <span className="text-3xl">{getCategoryIcon(name)}</span>
-            </div>
-            <span className="px-3 py-1 text-sm font-medium bg-primary/10 text-primary rounded-full">
-              {count.toLocaleString()} Qs
-            </span>
-          </div>
-
-          {/* Title */}
-          <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-            {name}
-          </h3>
-
-          {/* Description */}
-          {description && (
-            <p className="text-sm text-foreground-secondary mb-4 line-clamp-2">
-              {description}
-            </p>
-          )}
-
-          {/* Subcategories */}
-          {subcategories.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {subcategories.slice(0, 3).map((sub) => (
-                <span
-                  key={sub}
-                  className="px-2 py-1 text-xs bg-background-secondary text-foreground-secondary rounded-md"
-                >
-                  {sub}
-                </span>
-              ))}
-              {subcategories.length > 3 && (
-                <span className="px-2 py-1 text-xs bg-background-secondary text-foreground-secondary rounded-md">
-                  +{subcategories.length - 3}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* CTA */}
-          <div className="flex items-center gap-2 text-sm text-primary font-medium">
-            <span>Explore Questions</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </div>
+    <Link 
+      href={`/main/questions?category=${encodeURIComponent(name)}`}
+      className="group block p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02]"
+      style={{ 
+        backgroundColor: 'var(--card)',
+        border: '1px solid var(--card-border)'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = color;
+        e.currentTarget.style.boxShadow = `0 20px 40px -15px ${color}20`;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'var(--card-border)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
+    >
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
+        <div 
+          className="text-4xl"
+          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))' }}
+        >
+          {icon}
         </div>
+        <span 
+          className="px-3 py-1 rounded-full text-sm font-medium"
+          style={{ 
+            backgroundColor: `${color}20`,
+            color: color
+          }}
+        >
+          {count} Qs
+        </span>
+      </div>
+
+      {/* Content */}
+      <h3 
+        className="text-xl font-bold mb-2 transition-colors"
+        style={{ color: 'var(--foreground)' }}
+      >
+        {name}
+      </h3>
+      
+      <p 
+        className="text-sm mb-4 line-clamp-2"
+        style={{ color: 'var(--foreground-secondary)' }}
+      >
+        {description}
+      </p>
+
+      {/* Subcategories */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {subcategories.map((sub) => (
+          <span 
+            key={sub}
+            className="px-2 py-1 rounded-md text-xs"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)',
+              color: 'var(--foreground-secondary)'
+            }}
+          >
+            {sub}
+          </span>
+        ))}
+        {count > subcategories.length && (
+          <span 
+            className="px-2 py-1 rounded-md text-xs"
+            style={{ 
+              backgroundColor: 'var(--background-secondary)',
+              color: 'var(--foreground-muted)'
+            }}
+          >
+            +{count - subcategories.length}
+          </span>
+        )}
+      </div>
+
+      {/* CTA */}
+      <div 
+        className="flex items-center gap-2 text-sm font-medium transition-all group-hover:gap-3"
+        style={{ color }}
+      >
+        Explore Questions
+        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
       </div>
     </Link>
   );
