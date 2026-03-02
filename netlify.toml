@@ -1,0 +1,21 @@
+[build]
+  base = "frontend"
+  publish = ".next"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirect rules for Next.js
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  condition = {Role = ["admin"]}
+
+# API functions (if you want to run backend on Netlify too)
+[functions]
+  directory = "backend"
