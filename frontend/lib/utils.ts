@@ -81,3 +81,75 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     timeout = setTimeout(() => func(...args), wait);
   };
 }
+
+export function formatTime(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+export function formatDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  
+  if (hours > 0) {
+    return `${hours}h ${mins}m`;
+  }
+  return `${mins}m`;
+}
+
+export function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
+export function getRandomQuestions<T>(array: T[], count: number): T[] {
+  const shuffled = shuffleArray(array);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+export function copyToClipboard(text: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => resolve(true)).catch(() => resolve(false));
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        resolve(true);
+      } catch {
+        resolve(false);
+      }
+      document.body.removeChild(textArea);
+    }
+  });
+}
+
+export function generateQuizId(): string {
+  return `quiz-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+export function calculatePercentage(score: number, total: number): number {
+  if (total === 0) return 0;
+  return Math.round((score / total) * 100);
+}
+
+export function getGrade(percentage: number): { grade: string; color: string } {
+  if (percentage >= 90) return { grade: 'A+', color: 'text-green-400' };
+  if (percentage >= 80) return { grade: 'A', color: 'text-green-400' };
+  if (percentage >= 70) return { grade: 'B', color: 'text-blue-400' };
+  if (percentage >= 60) return { grade: 'C', color: 'text-yellow-400' };
+  if (percentage >= 50) return { grade: 'D', color: 'text-orange-400' };
+  return { grade: 'F', color: 'text-red-400' };
+}

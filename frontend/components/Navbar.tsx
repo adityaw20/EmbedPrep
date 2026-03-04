@@ -11,6 +11,9 @@ const navLinks = [
   { href: '/main/cpp-mcq', label: 'C++ MCQ' },
   { href: '/main/protocols', label: 'Protocols' },
   { href: '/main/interview', label: 'Interview' },
+  { href: '/main/quiz', label: 'Quiz' },
+  { href: '/main/flashcards', label: 'Flashcards' },
+  { href: '/main/roadmaps', label: 'Roadmaps' },
 ];
 
 export default function Navbar() {

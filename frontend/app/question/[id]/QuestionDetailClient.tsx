@@ -2,11 +2,26 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Eye, Tag, ChevronRight, BookOpen, CheckCircle, XCircle } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  Eye, 
+  Tag, 
+  ChevronRight, 
+  BookOpen, 
+  CheckCircle, 
+  XCircle,
+  Bookmark,
+  StickyNote,
+  Copy,
+  Check,
+  Play,
+  Target
+} from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { questionApi } from '@/lib/api';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { cn, getDifficultyColor, getCategoryIcon } from '@/lib/utils';
+import { cn, getDifficultyColor, getCategoryIcon, copyToClipboard } from '@/lib/utils';
+import { useUserProgress } from '@/lib/hooks';
 import type { Question } from '@/types';
 
 interface QuestionDetailClientProps {
@@ -14,12 +29,24 @@ interface QuestionDetailClientProps {
 }
 
 export default function QuestionDetailClient({ id }: QuestionDetailClientProps) {
+  const { 
+    markViewed, 
+    toggleBookmark, 
+    isBookmarked, 
+    addNote, 
+    getNote 
+  } = useUserProgress();
+  
   const [question, setQuestion] = useState<Question | null>(null);
   const [relatedQuestions, setRelatedQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isBookmarkedState, setIsBookmarkedState] = useState(false);
+  const [note, setNote] = useState('');
+  const [showNoteEditor, setShowNoteEditor] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -35,6 +62,9 @@ export default function QuestionDetailClient({ id }: QuestionDetailClientProps) 
 
         if (questionRes.success) {
           setQuestion(questionRes.data);
+          setIsBookmarkedState(isBookmarked(id));
+          setNote(getNote(id) || '');
+          markViewed(id);
         }
         if (relatedRes.success) {
           setRelatedQuestions(relatedRes.data);
@@ -49,7 +79,7 @@ export default function QuestionDetailClient({ id }: QuestionDetailClientProps) 
     if (id) {
       fetchQuestion();
     }
-  }, [id]);
+  }, [id, isBookmarked, getNote, markViewed]);
 
   const handleOptionClick = (optionId: string) => {
     if (hasSubmitted) return;
@@ -66,6 +96,25 @@ export default function QuestionDetailClient({ id }: QuestionDetailClientProps) 
     setHasSubmitted(false);
     setSelectedOption(null);
     setShowAnswer(false);
+  };
+
+  const handleToggleBookmark = () => {
+    toggleBookmark(id);
+    setIsBookmarkedState(!isBookmarkedState);
+  };
+
+  const handleSaveNote = () => {
+    addNote(id, note);
+    setShowNoteEditor(false);
+  };
+
+  const handleCopyCode = async () => {
+    if (!question?.codeSnippet) return;
+    const success = await copyToClipboard(question.codeSnippet);
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   if (loading) {
@@ -143,13 +192,110 @@ export default function QuestionDetailClient({ id }: QuestionDetailClientProps) 
         </h1>
       </div>
 
+      {/* Action Bar */}
+      <div className="flex flex-wrap items-center gap-3 mb-6 pb-6 border-b" style={{ borderColor: 'var(--card-border)' }}>
+        <button
+          onClick={handleToggleBookmark}
+          className={cn(
+            'flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all',
+            isBookmarkedState
+              ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/30'
+              : 'bg-[var(--background-secondary)] text-[var(--foreground-secondary)] hover:text-yellow-400'
+          )}>
+          <Bookmark className={cn('w-4 h-4', isBookmarkedState && 'fill-current')} />
+          {isBookmarkedState ? 'Bookmarked' : 'Bookmark'}
+        </button>
+        
+        <button
+          onClick={() => setShowNoteEditor(!showNoteEditor)}
+          className={cn(
+            'flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all',
+            note
+              ? 'bg-green-500/10 text-green-400 border border-green-500/30'
+              : 'bg-[var(--background-secondary)] text-[var(--foreground-secondary)] hover:text-green-400'
+          )}>
+          <StickyNote className="w-4 h-4" />
+          {note ? 'Edit Note' : 'Add Note'}
+        </button>
+
+        <Link
+          href="/main/quiz"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ml-auto"
+          style={{ 
+            backgroundColor: 'var(--primary)',
+            color: 'white'
+          }}>
+          <Play className="w-4 h-4" />
+          Take Quiz
+        </Link>
+      </div>
+
+      {/* Note Editor */}
+      {showNoteEditor && (
+        <div className="mb-6 p-4 rounded-xl border animate-fade-in"
+          style={{ backgroundColor: 'var(--card)', borderColor: 'var(--card-border)' }}>
+          <h3 className="text-sm font-medium mb-2" style={{ color: 'var(--foreground)' }}>
+            Your Note
+          </h3>
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Add your notes about this question..."
+            className="w-full p-3 rounded-lg border bg-transparent outline-none focus:border-blue-500 transition-all resize-none"
+            style={{ 
+              borderColor: 'var(--card-border)',
+              color: 'var(--foreground)',
+              minHeight: '100px'
+            }}
+          />
+          <div className="flex justify-end gap-2 mt-3">
+            <button
+              onClick={() => setShowNoteEditor(false)}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+              style={{ color: 'var(--foreground-secondary)' }}>
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveNote}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+              style={{ backgroundColor: 'var(--primary)', color: 'white' }}>
+              Save Note
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Saved Note Display */}
+      {note && !showNoteEditor && (
+        <div className="mb-6 p-4 rounded-xl border"
+          style={{ backgroundColor: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+          <div className="flex items-center gap-2 mb-2">
+            <StickyNote className="w-4 h-4" style={{ color: '#10b981' }} />
+            <span className="text-sm font-medium" style={{ color: '#10b981' }}>Your Note</span>
+          </div>
+          <p className="text-sm" style={{ color: 'var(--foreground-secondary)' }}>{note}</p>
+        </div>
+      )}
+
       {/* Code Snippet */}
       {question.codeSnippet && (
         <div className="mb-8">
-          <h3 className="text-sm font-semibold mb-3 uppercase tracking-wider" style={{ color: 'var(--foreground-muted)' }}>
-            Code
-          </h3>
-          <pre className="code-block">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--foreground-muted)' }}>
+              Code
+            </h3>
+            <button
+              onClick={handleCopyCode}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{ 
+                backgroundColor: 'var(--background-secondary)',
+                color: copied ? '#10b981' : 'var(--foreground-secondary)'
+              }}>
+              {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+          <pre className="code-block relative group">
             <code>{question.codeSnippet}</code>
           </pre>
         </div>
@@ -351,9 +497,10 @@ export default function QuestionDetailClient({ id }: QuestionDetailClientProps) 
           </h3>
           <div className="flex flex-wrap gap-2">
             {question.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="px-3 py-1.5 text-sm rounded-lg border"
+                href={`/main/search?q=${encodeURIComponent(tag)}`}
+                className="px-3 py-1.5 text-sm rounded-lg border transition-all hover:border-blue-500"
                 style={{ 
                   backgroundColor: 'var(--background-secondary)', 
                   color: 'var(--foreground-secondary)',
@@ -361,7 +508,7 @@ export default function QuestionDetailClient({ id }: QuestionDetailClientProps) 
                 }}
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         </div>

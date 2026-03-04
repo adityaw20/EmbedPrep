@@ -1980,6 +1980,389 @@ const rawQuestions: Omit<Question, '_id' | 'viewCount' | 'createdAt' | 'updatedA
     explanation: "Always start with basics: 1) Power supply (voltage, current), 2) Ground connections, 3) Clock signals, 4) Reset line, 5) Physical connections, 6) Then move to software/configuration.",
     tags: ["Troubleshooting", "Hardware", "Debugging", "Basics"],
     source: "Common Interview"
+  },
+
+  // ============== NEW 2024 QUESTIONS (50+ Additional) ==============
+  // Additional C Programming Questions
+  {
+    category: "C Programming",
+    subcategory: "Pointers",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the output: int arr[] = {1, 2, 3}; int *p = arr; printf(\"%d\", *(p++));",
+    options: [
+      { id: "a", text: "1" },
+      { id: "b", text: "2" },
+      { id: "c", text: "Garbage value" },
+      { id: "d", text: "Compilation error" }
+    ],
+    correctAnswer: "a",
+    explanation: "*(p++) uses post-increment. It returns the value at p (which is 1), then increments p to point to arr[1]. So it prints 1.",
+    tags: ["C", "Pointers", "Post-increment", "Operator Precedence"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Memory Management",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is a double pointer (pointer to pointer) used for?",
+    options: [
+      { id: "a", text: "To store two addresses" },
+      { id: "b", text: "To modify pointer values in functions" },
+      { id: "c", text: "To allocate double memory" },
+      { id: "d", text: "For 64-bit systems only" }
+    ],
+    correctAnswer: "b",
+    explanation: "Double pointers allow modifying a pointer's value in a function (pass-by-reference for pointers). Used in dynamic 2D arrays, linked list modifications, and when you need to change what a pointer points to.",
+    tags: ["C", "Double Pointer", "Pointer to Pointer", "Functions"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Preprocessor",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between #include <file.h> and #include \"file.h\"?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "<> searches system directories, \"\" searches current directory first" },
+      { id: "c", text: "\"\" is faster" },
+      { id: "d", text: "<> is deprecated" }
+    ],
+    correctAnswer: "b",
+    explanation: "#include <file> searches in system/compiler include paths. #include \"file\" searches in current directory first, then system paths. Use <> for standard headers and \"\" for user headers.",
+    tags: ["C", "Preprocessor", "Include", "Headers"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Strings",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Write a function to reverse a string in-place without using extra memory.",
+    correctAnswer: "Use two pointers - one at start, one at end. Swap characters and move pointers towards center until they meet.",
+    explanation: "void reverse(char *str) { int len = strlen(str); for(int i=0; i<len/2; i++) { char temp = str[i]; str[i] = str[len-1-i]; str[len-1-i] = temp; } }. Time: O(n), Space: O(1).",
+    tags: ["C", "Strings", "Two Pointers", "In-place"],
+    source: "Common Interview"
+  },
+  {
+    category: "C Programming",
+    subcategory: "Linked List",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "Detect and remove a loop in a linked list. Explain Floyd's Cycle Detection algorithm.",
+    correctAnswer: "Use slow and fast pointers. If they meet, loop exists. To remove, find loop start by moving slow to head, then advance both by 1 until they meet.",
+    explanation: "Floyd's Cycle: slow moves 1 step, fast moves 2 steps. If fast reaches NULL, no loop. If they meet, loop exists. To find start: reset slow to head, keep fast at meeting point, advance both by 1. Meeting point is loop start.",
+    tags: ["C", "Linked List", "Cycle Detection", "Floyd's Algorithm"],
+    source: "Common Interview"
+  },
+
+  // Additional C++ Questions
+  {
+    category: "C++ Programming",
+    subcategory: "OOP",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the output: class Base { public: virtual void show() {} }; class Derived: public Base {}; What is sizeof(Derived)?",
+    options: [
+      { id: "a", text: "1" },
+      { id: "b", text: "4 or 8 (pointer size)" },
+      { id: "c", text: "0" },
+      { id: "d", text: "Depends on compiler" }
+    ],
+    correctAnswer: "b",
+    explanation: "Derived class has a vptr (virtual pointer) pointing to vtable due to virtual function in Base. So sizeof(Derived) = sizeof(void*) = 4 or 8 bytes depending on architecture.",
+    tags: ["C++", "Virtual Functions", "vptr", "Memory"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "STL",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Which container should be used for frequent insertions/deletions in the middle?",
+    options: [
+      { id: "a", text: "vector" },
+      { id: "b", text: "list" },
+      { id: "c", text: "deque" },
+      { id: "d", text: "array" }
+    ],
+    correctAnswer: "b",
+    explanation: "list (doubly linked list) has O(1) insertion/deletion at any position with iterator. vector has O(n) for middle insertions due to shifting elements. deque is good for ends only.",
+    tags: ["C++", "STL", "Containers", "Performance"],
+    source: "Common Interview"
+  },
+  {
+    category: "C++ Programming",
+    subcategory: "Modern C++",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the difference between std::thread::join() and std::thread::detach()?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "join() waits for thread to finish, detach() allows thread to run independently" },
+      { id: "c", text: "detach() is deprecated" },
+      { id: "d", text: "join() kills the thread" }
+    ],
+    correctAnswer: "b",
+    explanation: "join() blocks until thread completes execution. detach() separates thread from thread object, allowing it to run independently. Must call either before thread object is destroyed.",
+    tags: ["C++", "Multithreading", "Threads", "Concurrency"],
+    source: "Common Interview"
+  },
+
+  // Additional Protocol Questions
+  {
+    category: "Communication Protocols",
+    subcategory: "CAN",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is CAN bit timing and why is it important?",
+    options: [
+      { id: "a", text: "It sets the baud rate only" },
+      { id: "b", text: "It defines sample point and synchronizes nodes on the bus" },
+      { id: "c", text: "It is not important" },
+      { id: "d", text: "It only affects data length" }
+    ],
+    correctAnswer: "b",
+    explanation: "CAN bit timing determines baud rate and sample point position. All nodes must use same bit timing to synchronize. Proper configuration ensures reliable communication across different cable lengths and transceiver delays.",
+    tags: ["CAN", "Bit Timing", "Synchronization", "Physical Layer"],
+    source: "Bosch"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "Ethernet",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Explain the difference between TCP and UDP with use cases.",
+    correctAnswer: "TCP: connection-oriented, reliable, ordered delivery, flow control. UDP: connectionless, unreliable, low overhead, faster. Use TCP for file transfer, UDP for streaming.",
+    explanation: "TCP provides reliable, ordered delivery with congestion control - used for HTTP, FTP, email. UDP is faster with lower overhead but no guarantees - used for video streaming, DNS, online gaming where speed matters more than reliability.",
+    tags: ["TCP", "UDP", "Networking", "Transport Layer"],
+    source: "Common Interview"
+  },
+  {
+    category: "Communication Protocols",
+    subcategory: "SPI",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the maximum SPI clock frequency dependent on?",
+    options: [
+      { id: "a", text: "Only the master device" },
+      { id: "b", text: "The slowest device on the bus" },
+      { id: "c", text: "The cable length only" },
+      { id: "d", text: "The power supply voltage" }
+    ],
+    correctAnswer: "b",
+    explanation: "SPI bus frequency is limited by the slowest device (master or slave). All devices must support the selected frequency. Also limited by PCB trace length and capacitance at higher speeds.",
+    tags: ["SPI", "Clock", "Timing", "Hardware"],
+    source: "Common Interview"
+  },
+
+  // Additional Embedded Systems Questions
+  {
+    category: "Embedded Systems",
+    subcategory: "Memory",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the difference between NOR and NAND flash?",
+    options: [
+      { id: "a", text: "No difference" },
+      { id: "b", text: "NOR allows random access, NAND is faster for sequential access" },
+      { id: "c", text: "NAND is more expensive" },
+      { id: "d", text: "NOR cannot be used for code execution" }
+    ],
+    correctAnswer: "b",
+    explanation: "NOR flash allows random byte access (execute-in-place), has lower density, higher cost. NAND has higher density, lower cost, faster write/erase, but requires block access. NOR for code storage, NAND for data.",
+    tags: ["Flash", "NOR", "NAND", "Memory"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "Low Power",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What are common techniques to reduce power consumption in embedded systems?",
+    options: [
+      { id: "a", text: "Increase clock speed" },
+      { id: "b", text: "Clock gating, power gating, sleep modes, peripheral shutdown" },
+      { id: "c", text: "Use more peripherals" },
+      { id: "d", text: "Disable watchdog timer only" }
+    ],
+    correctAnswer: "b",
+    explanation: "Power reduction techniques: Clock gating (disable unused clocks), Power gating (cut power to unused blocks), Sleep modes (CPU halt), Reduce clock frequency, Voltage scaling, Peripheral shutdown when idle.",
+    tags: ["Low Power", "Power Management", "Clock Gating", "Sleep Modes"],
+    source: "Common Interview"
+  },
+  {
+    category: "Embedded Systems",
+    subcategory: "Debugging",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "Explain how to debug a stack overflow in an embedded system.",
+    correctAnswer: "Check stack usage pattern, use stack canaries, monitor SP register, analyze call depth, check for large local variables or deep recursion.",
+    explanation: "Stack overflow debugging: 1) Fill stack with pattern and check how much is overwritten, 2) Use stack canaries to detect overflow, 3) Monitor SP in debugger, 4) Review code for large stack allocations, 5) Check for unintended recursion, 6) Use MPU to detect stack overflow.",
+    tags: ["Debugging", "Stack Overflow", "Stack", "Hard Fault"],
+    source: "Common Interview"
+  },
+
+  // Additional RTOS Questions
+  {
+    category: "RTOS",
+    subcategory: "Scheduling",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is priority inversion and how does priority inheritance solve it?",
+    options: [
+      { id: "a", text: "Priority inversion doesn't exist" },
+      { id: "b", text: "High priority task blocked by low priority; inheritance boosts low priority temporarily" },
+      { id: "c", text: "It is solved by disabling interrupts" },
+      { id: "d", text: "Priority inheritance permanently changes task priority" }
+    ],
+    correctAnswer: "b",
+    explanation: "Priority inversion: High priority task waits for resource held by low priority task, which gets preempted by medium priority tasks. Priority inheritance temporarily boosts low priority task to high priority's level until resource is released.",
+    tags: ["RTOS", "Priority Inversion", "Priority Inheritance", "Synchronization"],
+    source: "Common Interview"
+  },
+  {
+    category: "RTOS",
+    subcategory: "Memory",
+    type: "DESCRIPTIVE",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "Why is dynamic memory allocation generally discouraged in safety-critical RTOS applications?",
+    correctAnswer: "Dynamic allocation can lead to fragmentation, non-deterministic timing, and allocation failures. Safety-critical systems prefer static allocation for predictability.",
+    explanation: "Problems with malloc in RTOS: 1) Non-deterministic execution time, 2) Memory fragmentation over time, 3) Risk of allocation failure, 4) Difficult to verify memory usage at compile time. Safety standards like DO-178C often require static allocation.",
+    tags: ["RTOS", "Memory", "Safety Critical", "Static Allocation"],
+    source: "Common Interview"
+  },
+
+  // Additional Microcontroller Questions
+  {
+    category: "Microcontrollers",
+    subcategory: "ARM",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "What is the difference between Cortex-M and Cortex-A series?",
+    options: [
+      { id: "a", text: "Only clock speed difference" },
+      { id: "b", text: "M for microcontrollers (deterministic, simpler), A for applications (MMU, complex, high performance)" },
+      { id: "c", text: "A series is 8-bit" },
+      { id: "d", text: "M series has MMU" }
+    ],
+    correctAnswer: "b",
+    explanation: "Cortex-M: Microcontroller profile, deterministic response, NVIC, no MMU, simpler. Used in MCUs like STM32. Cortex-A: Application profile, MMU support, high performance, caches, complex pipeline. Used in application processors like Raspberry Pi.",
+    tags: ["ARM", "Cortex-M", "Cortex-A", "Architecture"],
+    source: "ARM"
+  },
+  {
+    category: "Microcontrollers",
+    subcategory: "Peripherals",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the purpose of the DMA controller in microcontrollers?",
+    options: [
+      { id: "a", text: "To increase CPU clock speed" },
+      { id: "b", text: "To transfer data between peripherals and memory without CPU intervention" },
+      { id: "c", text: "To manage interrupts" },
+      { id: "d", text: "To provide additional GPIO" }
+    ],
+    correctAnswer: "b",
+    explanation: "DMA (Direct Memory Access) transfers data between memory locations or between peripherals and memory without CPU involvement. Frees CPU for other tasks during bulk data transfers like ADC sampling or UART communication.",
+    tags: ["DMA", "Peripherals", "Data Transfer", "Performance"],
+    source: "Common Interview"
+  },
+
+  // Additional Interview Questions
+  {
+    category: "Interview Questions",
+    subcategory: "System Design",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "5+ Years",
+    question: "Design a simple bootloader for a microcontroller. What are the key components?",
+    correctAnswer: "Bootloader needs: startup code, communication interface, flash programming logic, application validation (checksum), and jump to application.",
+    explanation: "Bootloader components: 1) Minimal hardware init (clock, UART), 2) Communication protocol for receiving firmware (UART/USB), 3) Flash write routines, 4) Checksum/CRC verification, 5) Vector table relocation, 6) Timeout and jump to application, 7) Fallback mechanism on invalid firmware.",
+    tags: ["Bootloader", "System Design", "Firmware Update", "Architecture"],
+    source: "Senior Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Testing",
+    type: "MCQ",
+    difficulty: "Medium",
+    experienceLevel: "1-3 Years",
+    question: "What is the purpose of unit testing in embedded systems?",
+    options: [
+      { id: "a", text: "To test hardware only" },
+      { id: "b", text: "To verify individual software components in isolation" },
+      { id: "c", text: "To replace integration testing" },
+      { id: "d", text: "To test power consumption" }
+    ],
+    correctAnswer: "b",
+    explanation: "Unit testing verifies individual functions/modules in isolation using mocks/stubs for hardware dependencies. Frameworks: Unity, CppUTest, Google Test. Enables testing on host PC before target hardware is available.",
+    tags: ["Testing", "Unit Testing", "Verification", "Quality"],
+    source: "Common Interview"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Optimization",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "3-5 Years",
+    question: "How would you optimize an interrupt service routine for minimal latency?",
+    correctAnswer: "Keep ISR short, use flags and deferred processing, minimize register usage, avoid function calls, use compiler attributes for speed.",
+    explanation: "ISR optimization: 1) Set flag and defer processing to main loop, 2) Avoid floating-point operations, 3) Minimize function calls, 4) Use register keyword sparingly, 5) Place critical ISRs in RAM (not Flash), 6) Use __attribute__((interrupt)) properly, 7) Disable unnecessary interrupts during critical sections.",
+    tags: ["Optimization", "ISR", "Interrupts", "Latency"],
+    source: "Common Interview"
+  },
+
+  // Additional Automotive Questions
+  {
+    category: "Interview Questions",
+    subcategory: "Automotive",
+    type: "MCQ",
+    difficulty: "Hard",
+    experienceLevel: "Automotive",
+    question: "What is UDS (Unified Diagnostic Services) used for in automotive?",
+    options: [
+      { id: "a", text: "Entertainment system control" },
+      { id: "b", text: "Diagnostic communication between tester and ECU" },
+      { id: "c", text: "Engine control only" },
+      { id: "d", text: "Infotainment networking" }
+    ],
+    correctAnswer: "b",
+    explanation: "UDS is a diagnostic protocol (ISO 14229) used for communication between diagnostic testers and ECUs. Services include reading DTCs, data identifiers, routine control, ECU programming, and security access.",
+    tags: ["UDS", "Diagnostic", "Automotive", "ISO 14229"],
+    source: "Automotive"
+  },
+  {
+    category: "Interview Questions",
+    subcategory: "Product Companies",
+    type: "DESCRIPTIVE",
+    difficulty: "Hard",
+    experienceLevel: "Product Companies",
+    question: "Design a circular buffer for ISR-to-main communication. Consider thread safety.",
+    correctAnswer: "Use head/tail indices with volatile, single producer (ISR) and single consumer (main). Disable interrupts only during index updates in main.",
+    explanation: "Thread-safe circular buffer: 1) Use volatile for shared indices, 2) Single producer (ISR writes), single consumer (main reads), 3) ISR only updates head, main only updates tail, 4) Main disables interrupts briefly to read/update tail, 5) Check full/empty by comparing indices with wrap-around handling.",
+    tags: ["Circular Buffer", "ISR", "Thread Safety", "Design"],
+    source: "Product Companies"
   }
 ];
 
